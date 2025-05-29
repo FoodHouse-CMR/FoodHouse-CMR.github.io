@@ -1,3 +1,8 @@
+---
+requireAuth: true
+title: Get Started
+---
+
 # Get Started
 
 This is a normal page, which contains VuePress basics.
