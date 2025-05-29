@@ -3,7 +3,7 @@ import { createAuth0Client } from "@auth0/auth0-spa-js";
 async function createClient() {
   try {
     console.log('type of window ', typeof window)
-
+    console.log(window.location.origin);
     let auth0Client = await createAuth0Client({
       domain: "dev-u2nuf4qnpgxwrc0x.us.auth0.com",
       clientId: "gflY16eZTriweM1HfDSq6PKCBqOteBUc",
