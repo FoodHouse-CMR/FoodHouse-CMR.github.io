@@ -33,7 +33,7 @@ jobs:
           VITE_OAUTH_DOMAIN: ${{ secrets.VITE_OAUTH_DOMAIN }}
           VITE_AUTH_CLIENT_ID: ${{ secrets.VITE_AUTH_CLIENT_ID }}
           VITE_OAUTH_REDIRECT_URL: ${{ secrets.VITE_OAUTH_REDIRECT_URL }}
-         run: |
+        run: |
           echo "Checking environment variables..."
           echo "Domain: $VITE_OAUTH_DOMAIN"
           echo "Client ID: $VITE_AUTH_CLIENT_ID"
