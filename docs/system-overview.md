@@ -118,7 +118,6 @@ The primary purpose of FoodHouse is to:
 
 ## System Architecture
 
-```plantuml
 @startuml
 !theme plain
 skinparam componentStyle rectangle
@@ -161,11 +160,9 @@ database "Databases" {
 [Payment Service] --> [Payment DB]
 
 @enduml
-```
 
 ## Entity Relationship Diagram
 
-```plantuml
 @startuml
 !theme plain
 skinparam linetype ortho
@@ -227,13 +224,11 @@ Order ||--|| Payment : has
 Product ||--o{ Order : included_in
 
 @enduml
-```
 
 ## Sequence Diagrams
 
 ### User Registration Flow
 
-```plantuml
 @startuml
 !theme plain
 skinparam sequenceMessageAlign center
@@ -257,11 +252,9 @@ US --> App: User Created
 App --> User: Registration Complete
 
 @enduml
-```
 
 ### Order Creation Flow
 
-```plantuml
 @startuml
 !theme plain
 skinparam sequenceMessageAlign center
@@ -288,7 +281,6 @@ OS --> App: Order Updated
 App --> Buyer: Order Confirmed
 
 @enduml
-```
 
 ## Technology Stack
 
@@ -319,118 +311,4 @@ App --> Buyer: Order Confirmed
 
 ## Deployment Architecture
 
-```plantuml
-@startuml
-!theme plain
-skinparam componentStyle rectangle
-
-cloud "AWS Cloud" {
-  node "Load Balancer" {
-    [ALB]
-  }
-  
-  node "ECS Cluster" {
-    [User Service]
-    [Product Service]
-    [Order Service]
-    [Payment Service]
-    [Delivery Service]
-  }
-  
-  database "RDS" {
-    [PostgreSQL]
-  }
-  
-  node "ElastiCache" {
-    [Redis]
-  }
-  
-  node "S3" {
-    [Static Assets]
-    [User Uploads]
-  }
-}
-
-[ALB] --> [User Service]
-[ALB] --> [Product Service]
-[ALB] --> [Order Service]
-[ALB] --> [Payment Service]
-[ALB] --> [Delivery Service]
-
-[User Service] --> [PostgreSQL]
-[Product Service] --> [PostgreSQL]
-[Order Service] --> [PostgreSQL]
-[Payment Service] --> [PostgreSQL]
-[Delivery Service] --> [PostgreSQL]
-
-[User Service] --> [Redis]
-[Product Service] --> [Redis]
-[Order Service] --> [Redis]
-[Payment Service] --> [Redis]
-[Delivery Service] --> [Redis]
-
-[User Service] --> [S3]
-[Product Service] --> [S3]
-
-@enduml
 ```
-
-## Monitoring and Logging
-
-### Monitoring
-- Application Metrics: Prometheus
-- Visualization: Grafana
-- Alerting: AlertManager
-- Health Checks: CloudWatch
-
-### Logging
-- Log Collection: Fluentd
-- Log Storage: Elasticsearch
-- Log Visualization: Kibana
-- Log Analysis: Logstash
-
-## Security Measures
-
-1. **Authentication & Authorization**
-   - JWT-based authentication
-   - Role-based access control
-   - OTP verification
-   - Session management
-
-2. **Data Security**
-   - Data encryption at rest
-   - Data encryption in transit
-   - Secure password hashing
-   - Input validation
-
-3. **API Security**
-   - Rate limiting
-   - Request validation
-   - CORS policies
-   - API versioning
-
-4. **Infrastructure Security**
-   - VPC configuration
-   - Security groups
-   - IAM roles
-   - Network ACLs
-
-## Future Enhancements
-
-1. **Feature Enhancements**
-   - AI-powered product recommendations
-   - Real-time price tracking
-   - Advanced analytics dashboard
-   - Mobile app enhancements
-
-2. **Technical Improvements**
-   - Microservices optimization
-   - Performance optimization
-   - Scalability improvements
-   - Enhanced monitoring
-
-3. **Business Expansion**
-   - International market support
-   - Additional payment methods
-   - Enhanced delivery options
-   - Partner integration 

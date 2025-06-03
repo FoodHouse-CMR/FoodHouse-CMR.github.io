@@ -1,5 +1,14 @@
-<template><div><h1 id="welcome-to-foodhouse" tabindex="-1"><a class="header-anchor" href="#welcome-to-foodhouse"><span>Welcome to FoodHouse</span></a></h1>
-<p>Welcome to the FoodHouse documentation. This documentation provides comprehensive information about the FoodHouse e-commerce platform for agricultural produce.</p>
+<template><div><h1 id="foodhouse-platform" tabindex="-1"><a class="header-anchor" href="#foodhouse-platform"><span>FoodHouse Platform</span></a></h1>
+<p>Welcome to the FoodHouse documentation. FoodHouse is a specialized e-commerce platform designed for agricultural produce trading, connecting farmers directly with buyers in a secure and efficient marketplace.</p>
+<h2 id="key-features" tabindex="-1"><a class="header-anchor" href="#key-features"><span>Key Features</span></a></h2>
+<ul>
+<li><strong>Direct Farm-to-Consumer Trading</strong>: Connect farmers directly with buyers</li>
+<li><strong>Real-time Inventory Management</strong>: Track produce availability and pricing</li>
+<li><strong>Secure Payment Processing</strong>: Integrated payment solutions with escrow services</li>
+<li><strong>Quality Assurance</strong>: Built-in quality control and verification processes</li>
+<li><strong>Analytics Dashboard</strong>: Comprehensive insights for both farmers and buyers</li>
+<li><strong>Mobile-First Design</strong>: Access the platform from any device</li>
+</ul>
 <h2 id="quick-start" tabindex="-1"><a class="header-anchor" href="#quick-start"><span>Quick Start</span></a></h2>
 <p>To get started with FoodHouse:</p>
 <ol>

@@ -24,7 +24,6 @@ This guide provides comprehensive instructions for deploying the FoodHouse appli
 
 ### AWS Infrastructure
 
-```plantuml
 @startuml
 !theme plain
 skinparam componentStyle rectangle
@@ -53,7 +52,6 @@ cloud "AWS Cloud" {
 [ECS Cluster] --> [S3]
 
 @enduml
-```
 
 ### Terraform Configuration
 

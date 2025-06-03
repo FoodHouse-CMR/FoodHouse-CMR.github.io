@@ -6,7 +6,6 @@ FoodHouse uses PostgreSQL as its primary database. The database is designed to s
 
 ## Database Architecture
 
-```plantuml
 @startuml
 !theme plain
 skinparam linetype ortho
@@ -46,7 +45,6 @@ database "PostgreSQL" {
 }
 
 @enduml
-```
 
 ## Users Schema
 

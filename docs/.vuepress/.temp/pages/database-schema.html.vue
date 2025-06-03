@@ -2,47 +2,8 @@
 <h2 id="overview" tabindex="-1"><a class="header-anchor" href="#overview"><span>Overview</span></a></h2>
 <p>FoodHouse uses PostgreSQL as its primary database. The database is designed to support the microservices architecture, with each service having its own database schema.</p>
 <h2 id="database-architecture" tabindex="-1"><a class="header-anchor" href="#database-architecture"><span>Database Architecture</span></a></h2>
-<div class="language-plantuml line-numbers-mode" data-highlighter="prismjs" data-ext="plantuml"><pre v-pre><code><span class="line"><span class="token delimiter punctuation">@startuml</span></span>
-<span class="line"><span class="token preprocessor property">!theme plain</span></span>
-<span class="line"><span class="token keyword">skinparam</span> linetype ortho</span>
-<span class="line"></span>
-<span class="line"><span class="token keyword">database</span> <span class="token string">"PostgreSQL"</span> <span class="token punctuation">{</span></span>
-<span class="line">  <span class="token keyword">frame</span> <span class="token string">"Users Schema"</span> <span class="token punctuation">{</span></span>
-<span class="line">    <span class="token punctuation">[</span>users<span class="token punctuation">]</span></span>
-<span class="line">    <span class="token punctuation">[</span>user_roles<span class="token punctuation">]</span></span>
-<span class="line">    <span class="token punctuation">[</span>user_subscriptions<span class="token punctuation">]</span></span>
-<span class="line">    <span class="token punctuation">[</span>user_payment_methods<span class="token punctuation">]</span></span>
-<span class="line">  <span class="token punctuation">}</span></span>
-<span class="line">  </span>
-<span class="line">  <span class="token keyword">frame</span> <span class="token string">"Products Schema"</span> <span class="token punctuation">{</span></span>
-<span class="line">    <span class="token punctuation">[</span>products<span class="token punctuation">]</span></span>
-<span class="line">    <span class="token punctuation">[</span>categories<span class="token punctuation">]</span></span>
-<span class="line">    <span class="token punctuation">[</span>product_names<span class="token punctuation">]</span></span>
-<span class="line">    <span class="token punctuation">[</span>price_types<span class="token punctuation">]</span></span>
-<span class="line">  <span class="token punctuation">}</span></span>
-<span class="line">  </span>
-<span class="line">  <span class="token keyword">frame</span> <span class="token string">"Orders Schema"</span> <span class="token punctuation">{</span></span>
-<span class="line">    <span class="token punctuation">[</span>orders<span class="token punctuation">]</span></span>
-<span class="line">    <span class="token punctuation">[</span>order_items<span class="token punctuation">]</span></span>
-<span class="line">    <span class="token punctuation">[</span>order_audit_logs<span class="token punctuation">]</span></span>
-<span class="line">  <span class="token punctuation">}</span></span>
-<span class="line">  </span>
-<span class="line">  <span class="token keyword">frame</span> <span class="token string">"Payments Schema"</span> <span class="token punctuation">{</span></span>
-<span class="line">    <span class="token punctuation">[</span>payments<span class="token punctuation">]</span></span>
-<span class="line">    <span class="token punctuation">[</span>payment_transactions<span class="token punctuation">]</span></span>
-<span class="line">    <span class="token punctuation">[</span>payment_methods<span class="token punctuation">]</span></span>
-<span class="line">  <span class="token punctuation">}</span></span>
-<span class="line">  </span>
-<span class="line">  <span class="token keyword">frame</span> <span class="token string">"Delivery Schema"</span> <span class="token punctuation">{</span></span>
-<span class="line">    <span class="token punctuation">[</span>delivery_points<span class="token punctuation">]</span></span>
-<span class="line">    <span class="token punctuation">[</span>delivery_routes<span class="token punctuation">]</span></span>
-<span class="line">    <span class="token punctuation">[</span>delivery_status<span class="token punctuation">]</span></span>
-<span class="line">  <span class="token punctuation">}</span></span>
-<span class="line"><span class="token punctuation">}</span></span>
-<span class="line"></span>
-<span class="line"><span class="token delimiter punctuation">@enduml</span></span>
-<span class="line"></span></code></pre>
-<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="users-schema" tabindex="-1"><a class="header-anchor" href="#users-schema"><span>Users Schema</span></a></h2>
+<img src="https://www.plantuml.com/plantuml/svg/XP9BQWCn343tFeMRasJHPQ4feQiIZ6Ah4r7_aEN2K7BtEed9P3e3NHYi9wCd2M-B04iDNZt92GFgx86YAbyKCp04xIcYZ1brOZabfHm87A6WtknIaO5n__QoqJzAwy_slE7tWbpqthPgS4je_L4ly33T3IUFCr3giLYcB9JYB95X31Z516n-TqsTsvc4EqwkMbauS-Uzc0N18J7TjJrlOgioCR9eBlEkY5xPhOoMhlJm41WI37C2rP4OduQr_cy3Blll_30BZJ340lPnJ_-kw1azVIEFVnMkSvCJJQOxvLG55xJz6AbTSbPRZAvzdry0" alt="">
+<h2 id="users-schema" tabindex="-1"><a class="header-anchor" href="#users-schema"><span>Users Schema</span></a></h2>
 <h3 id="users" tabindex="-1"><a class="header-anchor" href="#users"><span>users</span></a></h3>
 <div class="language-sql line-numbers-mode" data-highlighter="prismjs" data-ext="sql"><pre v-pre><code><span class="line"><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> users <span class="token punctuation">(</span></span>
 <span class="line">    user_id UUID <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span><span class="token punctuation">,</span></span>

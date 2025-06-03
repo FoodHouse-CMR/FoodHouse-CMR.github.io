@@ -1,7 +1,7 @@
 ---
 home: true
 title: FoodHouse Documentation
-heroImage: https://vuejs.press/images/hero.png
+heroImage: /images/foodhouse-logo.png
 actions:
   - text: Get Started
     link: /development.html
@@ -27,9 +27,18 @@ features:
 footer: MIT Licensed | Copyright © 2025 FoodHouse
 ---
 
-# Welcome to FoodHouse
+# FoodHouse Platform
 
-Welcome to the FoodHouse documentation. This documentation provides comprehensive information about the FoodHouse e-commerce platform for agricultural produce.
+Welcome to the FoodHouse documentation. FoodHouse is a specialized e-commerce platform designed for agricultural produce trading, connecting farmers directly with buyers in a secure and efficient marketplace.
+
+## Key Features
+
+- **Direct Farm-to-Consumer Trading**: Connect farmers directly with buyers
+- **Real-time Inventory Management**: Track produce availability and pricing
+- **Secure Payment Processing**: Integrated payment solutions with escrow services
+- **Quality Assurance**: Built-in quality control and verification processes
+- **Analytics Dashboard**: Comprehensive insights for both farmers and buyers
+- **Mobile-First Design**: Access the platform from any device
 
 ## Quick Start
 

@@ -20,36 +20,8 @@
 </ul>
 <h2 id="infrastructure-setup" tabindex="-1"><a class="header-anchor" href="#infrastructure-setup"><span>Infrastructure Setup</span></a></h2>
 <h3 id="aws-infrastructure" tabindex="-1"><a class="header-anchor" href="#aws-infrastructure"><span>AWS Infrastructure</span></a></h3>
-<div class="language-plantuml line-numbers-mode" data-highlighter="prismjs" data-ext="plantuml"><pre v-pre><code><span class="line"><span class="token delimiter punctuation">@startuml</span></span>
-<span class="line"><span class="token preprocessor property">!theme plain</span></span>
-<span class="line"><span class="token keyword">skinparam</span> componentStyle rectangle</span>
-<span class="line"></span>
-<span class="line"><span class="token keyword">cloud</span> <span class="token string">"AWS Cloud"</span> <span class="token punctuation">{</span></span>
-<span class="line">  <span class="token keyword">node</span> <span class="token string">"VPC"</span> <span class="token punctuation">{</span></span>
-<span class="line">    <span class="token keyword">node</span> <span class="token string">"Public Subnet"</span> <span class="token punctuation">{</span></span>
-<span class="line">      <span class="token punctuation">[</span>Internet Gateway<span class="token punctuation">]</span></span>
-<span class="line">      <span class="token punctuation">[</span>NAT Gateway<span class="token punctuation">]</span></span>
-<span class="line">      <span class="token punctuation">[</span>Load Balancer<span class="token punctuation">]</span></span>
-<span class="line">    <span class="token punctuation">}</span></span>
-<span class="line">    </span>
-<span class="line">    <span class="token keyword">node</span> <span class="token string">"Private Subnet"</span> <span class="token punctuation">{</span></span>
-<span class="line">      <span class="token punctuation">[</span>ECS Cluster<span class="token punctuation">]</span></span>
-<span class="line">      <span class="token punctuation">[</span>RDS<span class="token punctuation">]</span></span>
-<span class="line">      <span class="token punctuation">[</span>ElastiCache<span class="token punctuation">]</span></span>
-<span class="line">      <span class="token punctuation">[</span>S3<span class="token punctuation">]</span></span>
-<span class="line">    <span class="token punctuation">}</span></span>
-<span class="line">  <span class="token punctuation">}</span></span>
-<span class="line"><span class="token punctuation">}</span></span>
-<span class="line"></span>
-<span class="line"><span class="token punctuation">[</span>Internet Gateway<span class="token punctuation">]</span> <span class="token arrow operator">--></span> <span class="token punctuation">[</span>Load Balancer<span class="token punctuation">]</span></span>
-<span class="line"><span class="token punctuation">[</span>Load Balancer<span class="token punctuation">]</span> <span class="token arrow operator">--></span> <span class="token punctuation">[</span>ECS Cluster<span class="token punctuation">]</span></span>
-<span class="line"><span class="token punctuation">[</span>ECS Cluster<span class="token punctuation">]</span> <span class="token arrow operator">--></span> <span class="token punctuation">[</span>RDS<span class="token punctuation">]</span></span>
-<span class="line"><span class="token punctuation">[</span>ECS Cluster<span class="token punctuation">]</span> <span class="token arrow operator">--></span> <span class="token punctuation">[</span>ElastiCache<span class="token punctuation">]</span></span>
-<span class="line"><span class="token punctuation">[</span>ECS Cluster<span class="token punctuation">]</span> <span class="token arrow operator">--></span> <span class="token punctuation">[</span>S3<span class="token punctuation">]</span></span>
-<span class="line"></span>
-<span class="line"><span class="token delimiter punctuation">@enduml</span></span>
-<span class="line"></span></code></pre>
-<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="terraform-configuration" tabindex="-1"><a class="header-anchor" href="#terraform-configuration"><span>Terraform Configuration</span></a></h3>
+<img src="https://www.plantuml.com/plantuml/svg/RP71Yi9038RlynInTqzx5xKh8iWYEx8UbZt4QT31QQPCCueiVNTRIzsjzJ8atpyX7sHQ2WQ9kLCZEL9EK3YqhCgJvG83vc1yNdWc5YrNHn382FB1aLB6-PX1CjjfI9ioWLy5m3uZIBusQTjsO1FtpXhGSSyaNGJmlMAXK2DOej05hpzTy37R3jZQOmPpTCY6Gakh-_j_KR3dUcouQP4sdh6KRhHcd-_wKIySbc9JD4TwCFtsjwLIbL93NnYF9mEpfxxzqnFeTMr-btd1Us8lyaPoIfpLHxm1" alt="">
+<h3 id="terraform-configuration" tabindex="-1"><a class="header-anchor" href="#terraform-configuration"><span>Terraform Configuration</span></a></h3>
 <div class="language-hcl line-numbers-mode" data-highlighter="prismjs" data-ext="hcl"><pre v-pre><code><span class="line"><span class="token comment"># main.tf</span></span>
 <span class="line"><span class="token keyword">provider<span class="token type variable"> "aws" </span></span><span class="token punctuation">{</span></span>
 <span class="line">  <span class="token property">region</span> <span class="token punctuation">=</span> var.aws_region</span>
