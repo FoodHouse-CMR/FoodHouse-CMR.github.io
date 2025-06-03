@@ -2,9 +2,9 @@ import { createAuth0Client } from "@auth0/auth0-spa-js";
 
 // Configuration with fallbacks for development
 const config = {
-  domain: import.meta.env.VITE_AUTH0_DOMAIN,
-  clientId: import.meta.env.VITE_AUTH0_CLIENT_ID,
-  redirectUri: import.meta.env.VITE_AUTH0_REDIRECT_URI,
+  domain: import.meta.env.VITE_OAUTH_DOMAIN,
+  clientId: import.meta.env.VITE_AUTH_CLIENT_ID,
+  redirectUri: import.meta.env.VITE_OAUTH_REDIRECT_URL,
 };
 
 // Initialize auth client with retry mechanism

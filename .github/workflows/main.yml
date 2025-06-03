@@ -27,18 +27,16 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # Create .env file in docs directory
+      - name: Create .env file
+        run: |
+          echo "VITE_OAUTH_DOMAIN=${{ secrets.VITE_OAUTH_DOMAIN }}" > docs/.env
+          echo "VITE_AUTH_CLIENT_ID=${{ secrets.VITE_AUTH_CLIENT_ID }}" >> docs/.env
+          echo "VITE_OAUTH_REDIRECT_URL=${{ secrets.VITE_OAUTH_REDIRECT_URL }}" >> docs/.env
+
       # run build script
       - name: Build VuePress site
-        env:
-          VITE_OAUTH_DOMAIN: ${{ secrets.VITE_OAUTH_DOMAIN }}
-          VITE_AUTH_CLIENT_ID: ${{ secrets.VITE_AUTH_CLIENT_ID }}
-          VITE_OAUTH_REDIRECT_URL: ${{ secrets.VITE_OAUTH_REDIRECT_URL }}
-        run: |
-          echo "Checking environment variables..."
-          echo "Domain: $VITE_OAUTH_DOMAIN"
-          echo "Client ID: $VITE_AUTH_CLIENT_ID"
-          echo "Redirect URL: $VITE_OAUTH_REDIRECT_URL"
-          npm run docs:build
+        run: npm run docs:build
 
       - name: Deploy to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v4
