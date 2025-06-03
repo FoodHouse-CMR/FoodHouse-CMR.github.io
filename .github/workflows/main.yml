@@ -33,7 +33,12 @@ jobs:
           VITE_OAUTH_DOMAIN: ${{ secrets.VITE_OAUTH_DOMAIN }}
           VITE_AUTH_CLIENT_ID: ${{ secrets.VITE_AUTH_CLIENT_ID }}
           VITE_OAUTH_REDIRECT_URL: ${{ secrets.VITE_OAUTH_REDIRECT_URL }}
-        run: npm run docs:build
+         run: |
+          echo "Checking environment variables..."
+          echo "Domain: $VITE_OAUTH_DOMAIN"
+          echo "Client ID: $VITE_AUTH_CLIENT_ID"
+          echo "Redirect URL: $VITE_OAUTH_REDIRECT_URL"
+          npm run docs:build
 
       - name: Deploy to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v4
