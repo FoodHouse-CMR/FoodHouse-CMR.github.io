@@ -9,7 +9,9 @@ import * as clientConfig7 from 'C:/Users/AJJ/Desktop/Personal/FoodHouse-CMR.gith
 import * as clientConfig8 from 'C:/Users/AJJ/Desktop/Personal/FoodHouse-CMR.github.io/docs/.vuepress/.temp/markdown-tab/config.js'
 import * as clientConfig9 from 'C:/Users/AJJ/Desktop/Personal/FoodHouse-CMR.github.io/node_modules/@vuepress/plugin-theme-data/lib/client/config.js'
 import * as clientConfig10 from 'C:/Users/AJJ/Desktop/Personal/FoodHouse-CMR.github.io/node_modules/@vuepress/theme-default/lib/client/config.js'
-import * as clientConfig11 from 'C:/Users/AJJ/Desktop/Personal/FoodHouse-CMR.github.io/docs/.vuepress/client.js'
+import * as clientConfig11 from 'C:/Users/AJJ/Desktop/Personal/FoodHouse-CMR.github.io/docs/.vuepress/.temp/sass-palette/load-hope.js'
+import * as clientConfig12 from 'C:/Users/AJJ/Desktop/Personal/FoodHouse-CMR.github.io/docs/.vuepress/.temp/md-enhance/config.js'
+import * as clientConfig13 from 'C:/Users/AJJ/Desktop/Personal/FoodHouse-CMR.github.io/docs/.vuepress/client.js'
 
 export const clientConfigs = [
   clientConfig0,
@@ -24,4 +26,6 @@ export const clientConfigs = [
   clientConfig9,
   clientConfig10,
   clientConfig11,
+  clientConfig12,
+  clientConfig13,
 ].map((m) => m.default).filter(Boolean)

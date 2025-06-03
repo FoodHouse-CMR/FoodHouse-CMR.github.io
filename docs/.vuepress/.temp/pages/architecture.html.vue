@@ -1,0 +1,972 @@
+<template><div><h1 id="architecture-guide" tabindex="-1"><a class="header-anchor" href="#architecture-guide"><span>Architecture Guide</span></a></h1>
+<h2 id="overview" tabindex="-1"><a class="header-anchor" href="#overview"><span>Overview</span></a></h2>
+<p>This guide provides a comprehensive overview of the FoodHouse system architecture. It covers the system design, components, interactions, and deployment architecture.</p>
+<h2 id="system-design" tabindex="-1"><a class="header-anchor" href="#system-design"><span>System Design</span></a></h2>
+<h3 id="architecture-principles" tabindex="-1"><a class="header-anchor" href="#architecture-principles"><span>Architecture Principles</span></a></h3>
+<ol>
+<li>
+<p><strong>Microservices Architecture</strong></p>
+<ul>
+<li>Service independence</li>
+<li>Domain-driven design</li>
+<li>Event-driven communication</li>
+<li>API-first approach</li>
+</ul>
+</li>
+<li>
+<p><strong>Design Patterns</strong></p>
+<ul>
+<li>Repository pattern</li>
+<li>Factory pattern</li>
+<li>Observer pattern</li>
+<li>Circuit breaker pattern</li>
+</ul>
+</li>
+<li>
+<p><strong>Best Practices</strong></p>
+<ul>
+<li>SOLID principles</li>
+<li>DRY principle</li>
+<li>KISS principle</li>
+<li>YAGNI principle</li>
+</ul>
+</li>
+</ol>
+<h3 id="system-components" tabindex="-1"><a class="header-anchor" href="#system-components"><span>System Components</span></a></h3>
+<ol>
+<li>
+<p><strong>Core Services</strong></p>
+<div class="language-text line-numbers-mode" data-highlighter="prismjs" data-ext="text"><pre v-pre><code><span class="line">foodhouse/</span>
+<span class="line">├── users/              # User management</span>
+<span class="line">├── products/           # Product management</span>
+<span class="line">├── orders/             # Order management</span>
+<span class="line">├── payments/           # Payment processing</span>
+<span class="line">└── delivery/           # Delivery management</span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
+<li>
+<p><strong>Supporting Services</strong></p>
+<div class="language-text line-numbers-mode" data-highlighter="prismjs" data-ext="text"><pre v-pre><code><span class="line">foodhouse/</span>
+<span class="line">├── auth/               # Authentication</span>
+<span class="line">├── notifications/      # Notifications</span>
+<span class="line">├── analytics/          # Analytics</span>
+<span class="line">└── search/             # Search service</span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
+</ol>
+<h2 id="service-architecture" tabindex="-1"><a class="header-anchor" href="#service-architecture"><span>Service Architecture</span></a></h2>
+<h3 id="user-service" tabindex="-1"><a class="header-anchor" href="#user-service"><span>User Service</span></a></h3>
+<ol>
+<li>
+<p><strong>Components</strong></p>
+<div class="language-go line-numbers-mode" data-highlighter="prismjs" data-ext="go"><pre v-pre><code><span class="line"><span class="token comment">// User service components</span></span>
+<span class="line"><span class="token keyword">type</span> UserService <span class="token keyword">struct</span> <span class="token punctuation">{</span></span>
+<span class="line">    repo    UserRepository</span>
+<span class="line">    auth    AuthService</span>
+<span class="line">    events  EventPublisher</span>
+<span class="line">    cache   Cache</span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="token comment">// User repository interface</span></span>
+<span class="line"><span class="token keyword">type</span> UserRepository <span class="token keyword">interface</span> <span class="token punctuation">{</span></span>
+<span class="line">    <span class="token function">Create</span><span class="token punctuation">(</span>ctx context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> user <span class="token operator">*</span>User<span class="token punctuation">)</span> <span class="token builtin">error</span></span>
+<span class="line">    <span class="token function">GetByID</span><span class="token punctuation">(</span>ctx context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> id <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">*</span>User<span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span></span>
+<span class="line">    <span class="token function">Update</span><span class="token punctuation">(</span>ctx context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> user <span class="token operator">*</span>User<span class="token punctuation">)</span> <span class="token builtin">error</span></span>
+<span class="line">    <span class="token function">Delete</span><span class="token punctuation">(</span>ctx context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> id <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">error</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
+<li>
+<p><strong>API Endpoints</strong></p>
+<div class="language-protobuf line-numbers-mode" data-highlighter="prismjs" data-ext="protobuf"><pre v-pre><code><span class="line"><span class="token comment">// User service API</span></span>
+<span class="line"><span class="token keyword">service</span> <span class="token class-name">UserService</span> <span class="token punctuation">{</span></span>
+<span class="line">    <span class="token keyword">rpc</span> <span class="token function">CreateUser</span><span class="token punctuation">(</span><span class="token class-name">CreateUserRequest</span><span class="token punctuation">)</span> <span class="token keyword">returns</span> <span class="token punctuation">(</span><span class="token class-name">User</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">        <span class="token keyword">option</span> <span class="token punctuation">(</span>google<span class="token punctuation">.</span>api<span class="token punctuation">.</span>http<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token punctuation">{</span></span>
+<span class="line">            post<span class="token punctuation">:</span> <span class="token string">"/v1/users"</span></span>
+<span class="line">            body<span class="token punctuation">:</span> <span class="token string">"*"</span></span>
+<span class="line">        <span class="token punctuation">}</span><span class="token punctuation">;</span></span>
+<span class="line">    <span class="token punctuation">}</span></span>
+<span class="line">    <span class="token keyword">rpc</span> <span class="token function">GetUser</span><span class="token punctuation">(</span><span class="token class-name">GetUserRequest</span><span class="token punctuation">)</span> <span class="token keyword">returns</span> <span class="token punctuation">(</span><span class="token class-name">User</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">        <span class="token keyword">option</span> <span class="token punctuation">(</span>google<span class="token punctuation">.</span>api<span class="token punctuation">.</span>http<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token punctuation">{</span></span>
+<span class="line">            get<span class="token punctuation">:</span> <span class="token string">"/v1/users/{id}"</span></span>
+<span class="line">        <span class="token punctuation">}</span><span class="token punctuation">;</span></span>
+<span class="line">    <span class="token punctuation">}</span></span>
+<span class="line">    <span class="token keyword">rpc</span> <span class="token function">UpdateUser</span><span class="token punctuation">(</span><span class="token class-name">UpdateUserRequest</span><span class="token punctuation">)</span> <span class="token keyword">returns</span> <span class="token punctuation">(</span><span class="token class-name">User</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">        <span class="token keyword">option</span> <span class="token punctuation">(</span>google<span class="token punctuation">.</span>api<span class="token punctuation">.</span>http<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token punctuation">{</span></span>
+<span class="line">            put<span class="token punctuation">:</span> <span class="token string">"/v1/users/{id}"</span></span>
+<span class="line">            body<span class="token punctuation">:</span> <span class="token string">"*"</span></span>
+<span class="line">        <span class="token punctuation">}</span><span class="token punctuation">;</span></span>
+<span class="line">    <span class="token punctuation">}</span></span>
+<span class="line">    <span class="token keyword">rpc</span> <span class="token function">DeleteUser</span><span class="token punctuation">(</span><span class="token class-name">DeleteUserRequest</span><span class="token punctuation">)</span> <span class="token keyword">returns</span> <span class="token punctuation">(</span><span class="token class-name">Empty</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">        <span class="token keyword">option</span> <span class="token punctuation">(</span>google<span class="token punctuation">.</span>api<span class="token punctuation">.</span>http<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token punctuation">{</span></span>
+<span class="line">            delete<span class="token punctuation">:</span> <span class="token string">"/v1/users/{id}"</span></span>
+<span class="line">        <span class="token punctuation">}</span><span class="token punctuation">;</span></span>
+<span class="line">    <span class="token punctuation">}</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
+</ol>
+<h3 id="product-service" tabindex="-1"><a class="header-anchor" href="#product-service"><span>Product Service</span></a></h3>
+<ol>
+<li>
+<p><strong>Components</strong></p>
+<div class="language-go line-numbers-mode" data-highlighter="prismjs" data-ext="go"><pre v-pre><code><span class="line"><span class="token comment">// Product service components</span></span>
+<span class="line"><span class="token keyword">type</span> ProductService <span class="token keyword">struct</span> <span class="token punctuation">{</span></span>
+<span class="line">    repo    ProductRepository</span>
+<span class="line">    search  SearchService</span>
+<span class="line">    events  EventPublisher</span>
+<span class="line">    cache   Cache</span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="token comment">// Product repository interface</span></span>
+<span class="line"><span class="token keyword">type</span> ProductRepository <span class="token keyword">interface</span> <span class="token punctuation">{</span></span>
+<span class="line">    <span class="token function">Create</span><span class="token punctuation">(</span>ctx context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> product <span class="token operator">*</span>Product<span class="token punctuation">)</span> <span class="token builtin">error</span></span>
+<span class="line">    <span class="token function">GetByID</span><span class="token punctuation">(</span>ctx context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> id <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">*</span>Product<span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span></span>
+<span class="line">    <span class="token function">Update</span><span class="token punctuation">(</span>ctx context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> product <span class="token operator">*</span>Product<span class="token punctuation">)</span> <span class="token builtin">error</span></span>
+<span class="line">    <span class="token function">Delete</span><span class="token punctuation">(</span>ctx context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> id <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">error</span></span>
+<span class="line">    <span class="token function">List</span><span class="token punctuation">(</span>ctx context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> filter ProductFilter<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">*</span>Product<span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
+<li>
+<p><strong>API Endpoints</strong></p>
+<div class="language-protobuf line-numbers-mode" data-highlighter="prismjs" data-ext="protobuf"><pre v-pre><code><span class="line"><span class="token comment">// Product service API</span></span>
+<span class="line"><span class="token keyword">service</span> <span class="token class-name">ProductService</span> <span class="token punctuation">{</span></span>
+<span class="line">    <span class="token keyword">rpc</span> <span class="token function">CreateProduct</span><span class="token punctuation">(</span><span class="token class-name">CreateProductRequest</span><span class="token punctuation">)</span> <span class="token keyword">returns</span> <span class="token punctuation">(</span><span class="token class-name">Product</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">        <span class="token keyword">option</span> <span class="token punctuation">(</span>google<span class="token punctuation">.</span>api<span class="token punctuation">.</span>http<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token punctuation">{</span></span>
+<span class="line">            post<span class="token punctuation">:</span> <span class="token string">"/v1/products"</span></span>
+<span class="line">            body<span class="token punctuation">:</span> <span class="token string">"*"</span></span>
+<span class="line">        <span class="token punctuation">}</span><span class="token punctuation">;</span></span>
+<span class="line">    <span class="token punctuation">}</span></span>
+<span class="line">    <span class="token keyword">rpc</span> <span class="token function">GetProduct</span><span class="token punctuation">(</span><span class="token class-name">GetProductRequest</span><span class="token punctuation">)</span> <span class="token keyword">returns</span> <span class="token punctuation">(</span><span class="token class-name">Product</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">        <span class="token keyword">option</span> <span class="token punctuation">(</span>google<span class="token punctuation">.</span>api<span class="token punctuation">.</span>http<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token punctuation">{</span></span>
+<span class="line">            get<span class="token punctuation">:</span> <span class="token string">"/v1/products/{id}"</span></span>
+<span class="line">        <span class="token punctuation">}</span><span class="token punctuation">;</span></span>
+<span class="line">    <span class="token punctuation">}</span></span>
+<span class="line">    <span class="token keyword">rpc</span> <span class="token function">UpdateProduct</span><span class="token punctuation">(</span><span class="token class-name">UpdateProductRequest</span><span class="token punctuation">)</span> <span class="token keyword">returns</span> <span class="token punctuation">(</span><span class="token class-name">Product</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">        <span class="token keyword">option</span> <span class="token punctuation">(</span>google<span class="token punctuation">.</span>api<span class="token punctuation">.</span>http<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token punctuation">{</span></span>
+<span class="line">            put<span class="token punctuation">:</span> <span class="token string">"/v1/products/{id}"</span></span>
+<span class="line">            body<span class="token punctuation">:</span> <span class="token string">"*"</span></span>
+<span class="line">        <span class="token punctuation">}</span><span class="token punctuation">;</span></span>
+<span class="line">    <span class="token punctuation">}</span></span>
+<span class="line">    <span class="token keyword">rpc</span> <span class="token function">DeleteProduct</span><span class="token punctuation">(</span><span class="token class-name">DeleteProductRequest</span><span class="token punctuation">)</span> <span class="token keyword">returns</span> <span class="token punctuation">(</span><span class="token class-name">Empty</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">        <span class="token keyword">option</span> <span class="token punctuation">(</span>google<span class="token punctuation">.</span>api<span class="token punctuation">.</span>http<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token punctuation">{</span></span>
+<span class="line">            delete<span class="token punctuation">:</span> <span class="token string">"/v1/products/{id}"</span></span>
+<span class="line">        <span class="token punctuation">}</span><span class="token punctuation">;</span></span>
+<span class="line">    <span class="token punctuation">}</span></span>
+<span class="line">    <span class="token keyword">rpc</span> <span class="token function">ListProducts</span><span class="token punctuation">(</span><span class="token class-name">ListProductsRequest</span><span class="token punctuation">)</span> <span class="token keyword">returns</span> <span class="token punctuation">(</span><span class="token class-name">ListProductsResponse</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">        <span class="token keyword">option</span> <span class="token punctuation">(</span>google<span class="token punctuation">.</span>api<span class="token punctuation">.</span>http<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token punctuation">{</span></span>
+<span class="line">            get<span class="token punctuation">:</span> <span class="token string">"/v1/products"</span></span>
+<span class="line">        <span class="token punctuation">}</span><span class="token punctuation">;</span></span>
+<span class="line">    <span class="token punctuation">}</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
+</ol>
+<h3 id="order-service" tabindex="-1"><a class="header-anchor" href="#order-service"><span>Order Service</span></a></h3>
+<ol>
+<li>
+<p><strong>Components</strong></p>
+<div class="language-go line-numbers-mode" data-highlighter="prismjs" data-ext="go"><pre v-pre><code><span class="line"><span class="token comment">// Order service components</span></span>
+<span class="line"><span class="token keyword">type</span> OrderService <span class="token keyword">struct</span> <span class="token punctuation">{</span></span>
+<span class="line">    repo    OrderRepository</span>
+<span class="line">    events  EventPublisher</span>
+<span class="line">    cache   Cache</span>
+<span class="line">    payment PaymentService</span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="token comment">// Order repository interface</span></span>
+<span class="line"><span class="token keyword">type</span> OrderRepository <span class="token keyword">interface</span> <span class="token punctuation">{</span></span>
+<span class="line">    <span class="token function">Create</span><span class="token punctuation">(</span>ctx context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> order <span class="token operator">*</span>Order<span class="token punctuation">)</span> <span class="token builtin">error</span></span>
+<span class="line">    <span class="token function">GetByID</span><span class="token punctuation">(</span>ctx context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> id <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">*</span>Order<span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span></span>
+<span class="line">    <span class="token function">Update</span><span class="token punctuation">(</span>ctx context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> order <span class="token operator">*</span>Order<span class="token punctuation">)</span> <span class="token builtin">error</span></span>
+<span class="line">    <span class="token function">Delete</span><span class="token punctuation">(</span>ctx context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> id <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">error</span></span>
+<span class="line">    <span class="token function">List</span><span class="token punctuation">(</span>ctx context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> filter OrderFilter<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">*</span>Order<span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
+<li>
+<p><strong>API Endpoints</strong></p>
+<div class="language-protobuf line-numbers-mode" data-highlighter="prismjs" data-ext="protobuf"><pre v-pre><code><span class="line"><span class="token comment">// Order service API</span></span>
+<span class="line"><span class="token keyword">service</span> <span class="token class-name">OrderService</span> <span class="token punctuation">{</span></span>
+<span class="line">    <span class="token keyword">rpc</span> <span class="token function">CreateOrder</span><span class="token punctuation">(</span><span class="token class-name">CreateOrderRequest</span><span class="token punctuation">)</span> <span class="token keyword">returns</span> <span class="token punctuation">(</span><span class="token class-name">Order</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">        <span class="token keyword">option</span> <span class="token punctuation">(</span>google<span class="token punctuation">.</span>api<span class="token punctuation">.</span>http<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token punctuation">{</span></span>
+<span class="line">            post<span class="token punctuation">:</span> <span class="token string">"/v1/orders"</span></span>
+<span class="line">            body<span class="token punctuation">:</span> <span class="token string">"*"</span></span>
+<span class="line">        <span class="token punctuation">}</span><span class="token punctuation">;</span></span>
+<span class="line">    <span class="token punctuation">}</span></span>
+<span class="line">    <span class="token keyword">rpc</span> <span class="token function">GetOrder</span><span class="token punctuation">(</span><span class="token class-name">GetOrderRequest</span><span class="token punctuation">)</span> <span class="token keyword">returns</span> <span class="token punctuation">(</span><span class="token class-name">Order</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">        <span class="token keyword">option</span> <span class="token punctuation">(</span>google<span class="token punctuation">.</span>api<span class="token punctuation">.</span>http<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token punctuation">{</span></span>
+<span class="line">            get<span class="token punctuation">:</span> <span class="token string">"/v1/orders/{id}"</span></span>
+<span class="line">        <span class="token punctuation">}</span><span class="token punctuation">;</span></span>
+<span class="line">    <span class="token punctuation">}</span></span>
+<span class="line">    <span class="token keyword">rpc</span> <span class="token function">UpdateOrder</span><span class="token punctuation">(</span><span class="token class-name">UpdateOrderRequest</span><span class="token punctuation">)</span> <span class="token keyword">returns</span> <span class="token punctuation">(</span><span class="token class-name">Order</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">        <span class="token keyword">option</span> <span class="token punctuation">(</span>google<span class="token punctuation">.</span>api<span class="token punctuation">.</span>http<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token punctuation">{</span></span>
+<span class="line">            put<span class="token punctuation">:</span> <span class="token string">"/v1/orders/{id}"</span></span>
+<span class="line">            body<span class="token punctuation">:</span> <span class="token string">"*"</span></span>
+<span class="line">        <span class="token punctuation">}</span><span class="token punctuation">;</span></span>
+<span class="line">    <span class="token punctuation">}</span></span>
+<span class="line">    <span class="token keyword">rpc</span> <span class="token function">DeleteOrder</span><span class="token punctuation">(</span><span class="token class-name">DeleteOrderRequest</span><span class="token punctuation">)</span> <span class="token keyword">returns</span> <span class="token punctuation">(</span><span class="token class-name">Empty</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">        <span class="token keyword">option</span> <span class="token punctuation">(</span>google<span class="token punctuation">.</span>api<span class="token punctuation">.</span>http<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token punctuation">{</span></span>
+<span class="line">            delete<span class="token punctuation">:</span> <span class="token string">"/v1/orders/{id}"</span></span>
+<span class="line">        <span class="token punctuation">}</span><span class="token punctuation">;</span></span>
+<span class="line">    <span class="token punctuation">}</span></span>
+<span class="line">    <span class="token keyword">rpc</span> <span class="token function">ListOrders</span><span class="token punctuation">(</span><span class="token class-name">ListOrdersRequest</span><span class="token punctuation">)</span> <span class="token keyword">returns</span> <span class="token punctuation">(</span><span class="token class-name">ListOrdersResponse</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">        <span class="token keyword">option</span> <span class="token punctuation">(</span>google<span class="token punctuation">.</span>api<span class="token punctuation">.</span>http<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token punctuation">{</span></span>
+<span class="line">            get<span class="token punctuation">:</span> <span class="token string">"/v1/orders"</span></span>
+<span class="line">        <span class="token punctuation">}</span><span class="token punctuation">;</span></span>
+<span class="line">    <span class="token punctuation">}</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
+</ol>
+<h3 id="payment-service" tabindex="-1"><a class="header-anchor" href="#payment-service"><span>Payment Service</span></a></h3>
+<ol>
+<li>
+<p><strong>Components</strong></p>
+<div class="language-go line-numbers-mode" data-highlighter="prismjs" data-ext="go"><pre v-pre><code><span class="line"><span class="token comment">// Payment service components</span></span>
+<span class="line"><span class="token keyword">type</span> PaymentService <span class="token keyword">struct</span> <span class="token punctuation">{</span></span>
+<span class="line">    repo    PaymentRepository</span>
+<span class="line">    events  EventPublisher</span>
+<span class="line">    cache   Cache</span>
+<span class="line">    gateway PaymentGateway</span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="token comment">// Payment repository interface</span></span>
+<span class="line"><span class="token keyword">type</span> PaymentRepository <span class="token keyword">interface</span> <span class="token punctuation">{</span></span>
+<span class="line">    <span class="token function">Create</span><span class="token punctuation">(</span>ctx context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> payment <span class="token operator">*</span>Payment<span class="token punctuation">)</span> <span class="token builtin">error</span></span>
+<span class="line">    <span class="token function">GetByID</span><span class="token punctuation">(</span>ctx context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> id <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">*</span>Payment<span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span></span>
+<span class="line">    <span class="token function">Update</span><span class="token punctuation">(</span>ctx context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> payment <span class="token operator">*</span>Payment<span class="token punctuation">)</span> <span class="token builtin">error</span></span>
+<span class="line">    <span class="token function">Delete</span><span class="token punctuation">(</span>ctx context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> id <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">error</span></span>
+<span class="line">    <span class="token function">List</span><span class="token punctuation">(</span>ctx context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> filter PaymentFilter<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">*</span>Payment<span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
+<li>
+<p><strong>API Endpoints</strong></p>
+<div class="language-protobuf line-numbers-mode" data-highlighter="prismjs" data-ext="protobuf"><pre v-pre><code><span class="line"><span class="token comment">// Payment service API</span></span>
+<span class="line"><span class="token keyword">service</span> <span class="token class-name">PaymentService</span> <span class="token punctuation">{</span></span>
+<span class="line">    <span class="token keyword">rpc</span> <span class="token function">CreatePayment</span><span class="token punctuation">(</span><span class="token class-name">CreatePaymentRequest</span><span class="token punctuation">)</span> <span class="token keyword">returns</span> <span class="token punctuation">(</span><span class="token class-name">Payment</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">        <span class="token keyword">option</span> <span class="token punctuation">(</span>google<span class="token punctuation">.</span>api<span class="token punctuation">.</span>http<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token punctuation">{</span></span>
+<span class="line">            post<span class="token punctuation">:</span> <span class="token string">"/v1/payments"</span></span>
+<span class="line">            body<span class="token punctuation">:</span> <span class="token string">"*"</span></span>
+<span class="line">        <span class="token punctuation">}</span><span class="token punctuation">;</span></span>
+<span class="line">    <span class="token punctuation">}</span></span>
+<span class="line">    <span class="token keyword">rpc</span> <span class="token function">GetPayment</span><span class="token punctuation">(</span><span class="token class-name">GetPaymentRequest</span><span class="token punctuation">)</span> <span class="token keyword">returns</span> <span class="token punctuation">(</span><span class="token class-name">Payment</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">        <span class="token keyword">option</span> <span class="token punctuation">(</span>google<span class="token punctuation">.</span>api<span class="token punctuation">.</span>http<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token punctuation">{</span></span>
+<span class="line">            get<span class="token punctuation">:</span> <span class="token string">"/v1/payments/{id}"</span></span>
+<span class="line">        <span class="token punctuation">}</span><span class="token punctuation">;</span></span>
+<span class="line">    <span class="token punctuation">}</span></span>
+<span class="line">    <span class="token keyword">rpc</span> <span class="token function">UpdatePayment</span><span class="token punctuation">(</span><span class="token class-name">UpdatePaymentRequest</span><span class="token punctuation">)</span> <span class="token keyword">returns</span> <span class="token punctuation">(</span><span class="token class-name">Payment</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">        <span class="token keyword">option</span> <span class="token punctuation">(</span>google<span class="token punctuation">.</span>api<span class="token punctuation">.</span>http<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token punctuation">{</span></span>
+<span class="line">            put<span class="token punctuation">:</span> <span class="token string">"/v1/payments/{id}"</span></span>
+<span class="line">            body<span class="token punctuation">:</span> <span class="token string">"*"</span></span>
+<span class="line">        <span class="token punctuation">}</span><span class="token punctuation">;</span></span>
+<span class="line">    <span class="token punctuation">}</span></span>
+<span class="line">    <span class="token keyword">rpc</span> <span class="token function">DeletePayment</span><span class="token punctuation">(</span><span class="token class-name">DeletePaymentRequest</span><span class="token punctuation">)</span> <span class="token keyword">returns</span> <span class="token punctuation">(</span><span class="token class-name">Empty</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">        <span class="token keyword">option</span> <span class="token punctuation">(</span>google<span class="token punctuation">.</span>api<span class="token punctuation">.</span>http<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token punctuation">{</span></span>
+<span class="line">            delete<span class="token punctuation">:</span> <span class="token string">"/v1/payments/{id}"</span></span>
+<span class="line">        <span class="token punctuation">}</span><span class="token punctuation">;</span></span>
+<span class="line">    <span class="token punctuation">}</span></span>
+<span class="line">    <span class="token keyword">rpc</span> <span class="token function">ListPayments</span><span class="token punctuation">(</span><span class="token class-name">ListPaymentsRequest</span><span class="token punctuation">)</span> <span class="token keyword">returns</span> <span class="token punctuation">(</span><span class="token class-name">ListPaymentsResponse</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">        <span class="token keyword">option</span> <span class="token punctuation">(</span>google<span class="token punctuation">.</span>api<span class="token punctuation">.</span>http<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token punctuation">{</span></span>
+<span class="line">            get<span class="token punctuation">:</span> <span class="token string">"/v1/payments"</span></span>
+<span class="line">        <span class="token punctuation">}</span><span class="token punctuation">;</span></span>
+<span class="line">    <span class="token punctuation">}</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
+</ol>
+<h2 id="data-architecture" tabindex="-1"><a class="header-anchor" href="#data-architecture"><span>Data Architecture</span></a></h2>
+<h3 id="database-design" tabindex="-1"><a class="header-anchor" href="#database-design"><span>Database Design</span></a></h3>
+<ol>
+<li>
+<p><strong>User Schema</strong></p>
+<div class="language-sql line-numbers-mode" data-highlighter="prismjs" data-ext="sql"><pre v-pre><code><span class="line"><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> users <span class="token punctuation">(</span></span>
+<span class="line">    id UUID <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span><span class="token punctuation">,</span></span>
+<span class="line">    email <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">255</span><span class="token punctuation">)</span> <span class="token keyword">UNIQUE</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span></span>
+<span class="line">    password_hash <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">255</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span></span>
+<span class="line">    first_name <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">,</span></span>
+<span class="line">    last_name <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">,</span></span>
+<span class="line">    phone <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">,</span></span>
+<span class="line">    role <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span></span>
+<span class="line">    <span class="token keyword">status</span> <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span></span>
+<span class="line">    created_at <span class="token keyword">TIMESTAMP</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span></span>
+<span class="line">    updated_at <span class="token keyword">TIMESTAMP</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span></span>
+<span class="line"><span class="token punctuation">)</span><span class="token punctuation">;</span></span>
+<span class="line"></span>
+<span class="line"><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> user_addresses <span class="token punctuation">(</span></span>
+<span class="line">    id UUID <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span><span class="token punctuation">,</span></span>
+<span class="line">    user_id UUID <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">REFERENCES</span> users<span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">,</span></span>
+<span class="line">    address_line1 <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">255</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span></span>
+<span class="line">    address_line2 <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">255</span><span class="token punctuation">)</span><span class="token punctuation">,</span></span>
+<span class="line">    city <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span></span>
+<span class="line">    state <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span></span>
+<span class="line">    country <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span></span>
+<span class="line">    postal_code <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span></span>
+<span class="line">    is_default <span class="token keyword">BOOLEAN</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">false</span><span class="token punctuation">,</span></span>
+<span class="line">    created_at <span class="token keyword">TIMESTAMP</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span></span>
+<span class="line">    updated_at <span class="token keyword">TIMESTAMP</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span></span>
+<span class="line"><span class="token punctuation">)</span><span class="token punctuation">;</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
+<li>
+<p><strong>Product Schema</strong></p>
+<div class="language-sql line-numbers-mode" data-highlighter="prismjs" data-ext="sql"><pre v-pre><code><span class="line"><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> products <span class="token punctuation">(</span></span>
+<span class="line">    id UUID <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span><span class="token punctuation">,</span></span>
+<span class="line">    name <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">255</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span></span>
+<span class="line">    description <span class="token keyword">TEXT</span><span class="token punctuation">,</span></span>
+<span class="line">    price <span class="token keyword">DECIMAL</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span></span>
+<span class="line">    category_id UUID <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">REFERENCES</span> categories<span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">,</span></span>
+<span class="line">    merchant_id UUID <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">REFERENCES</span> users<span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">,</span></span>
+<span class="line">    <span class="token keyword">status</span> <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span></span>
+<span class="line">    created_at <span class="token keyword">TIMESTAMP</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span></span>
+<span class="line">    updated_at <span class="token keyword">TIMESTAMP</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span></span>
+<span class="line"><span class="token punctuation">)</span><span class="token punctuation">;</span></span>
+<span class="line"></span>
+<span class="line"><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> categories <span class="token punctuation">(</span></span>
+<span class="line">    id UUID <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span><span class="token punctuation">,</span></span>
+<span class="line">    name <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span></span>
+<span class="line">    description <span class="token keyword">TEXT</span><span class="token punctuation">,</span></span>
+<span class="line">    parent_id UUID <span class="token keyword">REFERENCES</span> categories<span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">,</span></span>
+<span class="line">    created_at <span class="token keyword">TIMESTAMP</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span></span>
+<span class="line">    updated_at <span class="token keyword">TIMESTAMP</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span></span>
+<span class="line"><span class="token punctuation">)</span><span class="token punctuation">;</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
+<li>
+<p><strong>Order Schema</strong></p>
+<div class="language-sql line-numbers-mode" data-highlighter="prismjs" data-ext="sql"><pre v-pre><code><span class="line"><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> orders <span class="token punctuation">(</span></span>
+<span class="line">    id UUID <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span><span class="token punctuation">,</span></span>
+<span class="line">    user_id UUID <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">REFERENCES</span> users<span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">,</span></span>
+<span class="line">    <span class="token keyword">status</span> <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span></span>
+<span class="line">    total_amount <span class="token keyword">DECIMAL</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span></span>
+<span class="line">    shipping_address_id UUID <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">REFERENCES</span> user_addresses<span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">,</span></span>
+<span class="line">    payment_id UUID <span class="token keyword">REFERENCES</span> payments<span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">,</span></span>
+<span class="line">    created_at <span class="token keyword">TIMESTAMP</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span></span>
+<span class="line">    updated_at <span class="token keyword">TIMESTAMP</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span></span>
+<span class="line"><span class="token punctuation">)</span><span class="token punctuation">;</span></span>
+<span class="line"></span>
+<span class="line"><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> order_items <span class="token punctuation">(</span></span>
+<span class="line">    id UUID <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span><span class="token punctuation">,</span></span>
+<span class="line">    order_id UUID <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">REFERENCES</span> orders<span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">,</span></span>
+<span class="line">    product_id UUID <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">REFERENCES</span> products<span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">,</span></span>
+<span class="line">    quantity <span class="token keyword">INTEGER</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span></span>
+<span class="line">    price <span class="token keyword">DECIMAL</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span></span>
+<span class="line">    created_at <span class="token keyword">TIMESTAMP</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span></span>
+<span class="line">    updated_at <span class="token keyword">TIMESTAMP</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span></span>
+<span class="line"><span class="token punctuation">)</span><span class="token punctuation">;</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
+<li>
+<p><strong>Payment Schema</strong></p>
+<div class="language-sql line-numbers-mode" data-highlighter="prismjs" data-ext="sql"><pre v-pre><code><span class="line"><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> payments <span class="token punctuation">(</span></span>
+<span class="line">    id UUID <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span><span class="token punctuation">,</span></span>
+<span class="line">    order_id UUID <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">REFERENCES</span> orders<span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">,</span></span>
+<span class="line">    amount <span class="token keyword">DECIMAL</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span></span>
+<span class="line">    currency <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span></span>
+<span class="line">    <span class="token keyword">status</span> <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span></span>
+<span class="line">    payment_method <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span></span>
+<span class="line">    transaction_id <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">255</span><span class="token punctuation">)</span><span class="token punctuation">,</span></span>
+<span class="line">    created_at <span class="token keyword">TIMESTAMP</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span></span>
+<span class="line">    updated_at <span class="token keyword">TIMESTAMP</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span></span>
+<span class="line"><span class="token punctuation">)</span><span class="token punctuation">;</span></span>
+<span class="line"></span>
+<span class="line"><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> payment_transactions <span class="token punctuation">(</span></span>
+<span class="line">    id UUID <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span><span class="token punctuation">,</span></span>
+<span class="line">    payment_id UUID <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">REFERENCES</span> payments<span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">,</span></span>
+<span class="line">    <span class="token keyword">type</span> <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span></span>
+<span class="line">    amount <span class="token keyword">DECIMAL</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span></span>
+<span class="line">    <span class="token keyword">status</span> <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span></span>
+<span class="line">    created_at <span class="token keyword">TIMESTAMP</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span></span>
+<span class="line">    updated_at <span class="token keyword">TIMESTAMP</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span></span>
+<span class="line"><span class="token punctuation">)</span><span class="token punctuation">;</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
+</ol>
+<h3 id="caching-strategy" tabindex="-1"><a class="header-anchor" href="#caching-strategy"><span>Caching Strategy</span></a></h3>
+<ol>
+<li>
+<p><strong>Cache Configuration</strong></p>
+<div class="language-go line-numbers-mode" data-highlighter="prismjs" data-ext="go"><pre v-pre><code><span class="line"><span class="token comment">// Cache configuration</span></span>
+<span class="line"><span class="token keyword">type</span> CacheConfig <span class="token keyword">struct</span> <span class="token punctuation">{</span></span>
+<span class="line">    Host     <span class="token builtin">string</span></span>
+<span class="line">    Port     <span class="token builtin">int</span></span>
+<span class="line">    Password <span class="token builtin">string</span></span>
+<span class="line">    DB       <span class="token builtin">int</span></span>
+<span class="line">    PoolSize <span class="token builtin">int</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="token comment">// Cache client</span></span>
+<span class="line"><span class="token keyword">type</span> Cache <span class="token keyword">struct</span> <span class="token punctuation">{</span></span>
+<span class="line">    client <span class="token operator">*</span>redis<span class="token punctuation">.</span>Client</span>
+<span class="line">    config CacheConfig</span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
+<li>
+<p><strong>Cache Usage</strong></p>
+<div class="language-go line-numbers-mode" data-highlighter="prismjs" data-ext="go"><pre v-pre><code><span class="line"><span class="token comment">// Cache operations</span></span>
+<span class="line"><span class="token keyword">func</span> <span class="token punctuation">(</span>c <span class="token operator">*</span>Cache<span class="token punctuation">)</span> <span class="token function">Get</span><span class="token punctuation">(</span>ctx context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> key <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">string</span><span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">    <span class="token keyword">return</span> c<span class="token punctuation">.</span>client<span class="token punctuation">.</span><span class="token function">Get</span><span class="token punctuation">(</span>ctx<span class="token punctuation">,</span> key<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">Result</span><span class="token punctuation">(</span><span class="token punctuation">)</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="token keyword">func</span> <span class="token punctuation">(</span>c <span class="token operator">*</span>Cache<span class="token punctuation">)</span> <span class="token function">Set</span><span class="token punctuation">(</span>ctx context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> key <span class="token builtin">string</span><span class="token punctuation">,</span> value <span class="token keyword">interface</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> expiration time<span class="token punctuation">.</span>Duration<span class="token punctuation">)</span> <span class="token builtin">error</span> <span class="token punctuation">{</span></span>
+<span class="line">    <span class="token keyword">return</span> c<span class="token punctuation">.</span>client<span class="token punctuation">.</span><span class="token function">Set</span><span class="token punctuation">(</span>ctx<span class="token punctuation">,</span> key<span class="token punctuation">,</span> value<span class="token punctuation">,</span> expiration<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">Err</span><span class="token punctuation">(</span><span class="token punctuation">)</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="token keyword">func</span> <span class="token punctuation">(</span>c <span class="token operator">*</span>Cache<span class="token punctuation">)</span> <span class="token function">Delete</span><span class="token punctuation">(</span>ctx context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> key <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">error</span> <span class="token punctuation">{</span></span>
+<span class="line">    <span class="token keyword">return</span> c<span class="token punctuation">.</span>client<span class="token punctuation">.</span><span class="token function">Del</span><span class="token punctuation">(</span>ctx<span class="token punctuation">,</span> key<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">Err</span><span class="token punctuation">(</span><span class="token punctuation">)</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
+</ol>
+<h2 id="communication-architecture" tabindex="-1"><a class="header-anchor" href="#communication-architecture"><span>Communication Architecture</span></a></h2>
+<h3 id="service-communication" tabindex="-1"><a class="header-anchor" href="#service-communication"><span>Service Communication</span></a></h3>
+<ol>
+<li>
+<p><strong>gRPC Communication</strong></p>
+<div class="language-go line-numbers-mode" data-highlighter="prismjs" data-ext="go"><pre v-pre><code><span class="line"><span class="token comment">// gRPC client</span></span>
+<span class="line"><span class="token keyword">type</span> GRPCClient <span class="token keyword">struct</span> <span class="token punctuation">{</span></span>
+<span class="line">    conn   <span class="token operator">*</span>grpc<span class="token punctuation">.</span>ClientConn</span>
+<span class="line">    client pb<span class="token punctuation">.</span>ServiceClient</span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="token comment">// gRPC server</span></span>
+<span class="line"><span class="token keyword">type</span> GRPCServer <span class="token keyword">struct</span> <span class="token punctuation">{</span></span>
+<span class="line">    server <span class="token operator">*</span>grpc<span class="token punctuation">.</span>Server</span>
+<span class="line">    service Service</span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
+<li>
+<p><strong>Event Communication</strong></p>
+<div class="language-go line-numbers-mode" data-highlighter="prismjs" data-ext="go"><pre v-pre><code><span class="line"><span class="token comment">// Event publisher</span></span>
+<span class="line"><span class="token keyword">type</span> EventPublisher <span class="token keyword">struct</span> <span class="token punctuation">{</span></span>
+<span class="line">    producer <span class="token operator">*</span>kafka<span class="token punctuation">.</span>Producer</span>
+<span class="line">    topic    <span class="token builtin">string</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="token comment">// Event subscriber</span></span>
+<span class="line"><span class="token keyword">type</span> EventSubscriber <span class="token keyword">struct</span> <span class="token punctuation">{</span></span>
+<span class="line">    consumer <span class="token operator">*</span>kafka<span class="token punctuation">.</span>Consumer</span>
+<span class="line">    topic    <span class="token builtin">string</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
+</ol>
+<h3 id="api-gateway" tabindex="-1"><a class="header-anchor" href="#api-gateway"><span>API Gateway</span></a></h3>
+<ol>
+<li>
+<p><strong>Gateway Configuration</strong></p>
+<div class="language-yaml line-numbers-mode" data-highlighter="prismjs" data-ext="yml"><pre v-pre><code><span class="line"><span class="token comment"># API Gateway configuration</span></span>
+<span class="line"><span class="token key atrule">routes</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token punctuation">-</span> <span class="token key atrule">path</span><span class="token punctuation">:</span> /api/v1/users</span>
+<span class="line">    <span class="token key atrule">service</span><span class="token punctuation">:</span> users</span>
+<span class="line">    <span class="token key atrule">methods</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>GET<span class="token punctuation">,</span> POST<span class="token punctuation">,</span> PUT<span class="token punctuation">,</span> DELETE<span class="token punctuation">]</span></span>
+<span class="line">  <span class="token punctuation">-</span> <span class="token key atrule">path</span><span class="token punctuation">:</span> /api/v1/products</span>
+<span class="line">    <span class="token key atrule">service</span><span class="token punctuation">:</span> products</span>
+<span class="line">    <span class="token key atrule">methods</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>GET<span class="token punctuation">,</span> POST<span class="token punctuation">,</span> PUT<span class="token punctuation">,</span> DELETE<span class="token punctuation">]</span></span>
+<span class="line">  <span class="token punctuation">-</span> <span class="token key atrule">path</span><span class="token punctuation">:</span> /api/v1/orders</span>
+<span class="line">    <span class="token key atrule">service</span><span class="token punctuation">:</span> orders</span>
+<span class="line">    <span class="token key atrule">methods</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>GET<span class="token punctuation">,</span> POST<span class="token punctuation">,</span> PUT<span class="token punctuation">,</span> DELETE<span class="token punctuation">]</span></span>
+<span class="line">  <span class="token punctuation">-</span> <span class="token key atrule">path</span><span class="token punctuation">:</span> /api/v1/payments</span>
+<span class="line">    <span class="token key atrule">service</span><span class="token punctuation">:</span> payments</span>
+<span class="line">    <span class="token key atrule">methods</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>GET<span class="token punctuation">,</span> POST<span class="token punctuation">,</span> PUT<span class="token punctuation">,</span> DELETE<span class="token punctuation">]</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
+<li>
+<p><strong>Gateway Middleware</strong></p>
+<div class="language-go line-numbers-mode" data-highlighter="prismjs" data-ext="go"><pre v-pre><code><span class="line"><span class="token comment">// Authentication middleware</span></span>
+<span class="line"><span class="token keyword">func</span> <span class="token function">AuthMiddleware</span><span class="token punctuation">(</span>next http<span class="token punctuation">.</span>Handler<span class="token punctuation">)</span> http<span class="token punctuation">.</span>Handler <span class="token punctuation">{</span></span>
+<span class="line">    <span class="token keyword">return</span> http<span class="token punctuation">.</span><span class="token function">HandlerFunc</span><span class="token punctuation">(</span><span class="token keyword">func</span><span class="token punctuation">(</span>w http<span class="token punctuation">.</span>ResponseWriter<span class="token punctuation">,</span> r <span class="token operator">*</span>http<span class="token punctuation">.</span>Request<span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">        token <span class="token operator">:=</span> r<span class="token punctuation">.</span>Header<span class="token punctuation">.</span><span class="token function">Get</span><span class="token punctuation">(</span><span class="token string">"Authorization"</span><span class="token punctuation">)</span></span>
+<span class="line">        <span class="token keyword">if</span> token <span class="token operator">==</span> <span class="token string">""</span> <span class="token punctuation">{</span></span>
+<span class="line">            http<span class="token punctuation">.</span><span class="token function">Error</span><span class="token punctuation">(</span>w<span class="token punctuation">,</span> <span class="token string">"Unauthorized"</span><span class="token punctuation">,</span> http<span class="token punctuation">.</span>StatusUnauthorized<span class="token punctuation">)</span></span>
+<span class="line">            <span class="token keyword">return</span></span>
+<span class="line">        <span class="token punctuation">}</span></span>
+<span class="line">        <span class="token comment">// Validate token</span></span>
+<span class="line">        next<span class="token punctuation">.</span><span class="token function">ServeHTTP</span><span class="token punctuation">(</span>w<span class="token punctuation">,</span> r<span class="token punctuation">)</span></span>
+<span class="line">    <span class="token punctuation">}</span><span class="token punctuation">)</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="token comment">// Rate limiting middleware</span></span>
+<span class="line"><span class="token keyword">func</span> <span class="token function">RateLimitMiddleware</span><span class="token punctuation">(</span>next http<span class="token punctuation">.</span>Handler<span class="token punctuation">)</span> http<span class="token punctuation">.</span>Handler <span class="token punctuation">{</span></span>
+<span class="line">    <span class="token keyword">return</span> http<span class="token punctuation">.</span><span class="token function">HandlerFunc</span><span class="token punctuation">(</span><span class="token keyword">func</span><span class="token punctuation">(</span>w http<span class="token punctuation">.</span>ResponseWriter<span class="token punctuation">,</span> r <span class="token operator">*</span>http<span class="token punctuation">.</span>Request<span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">        <span class="token comment">// Check rate limit</span></span>
+<span class="line">        next<span class="token punctuation">.</span><span class="token function">ServeHTTP</span><span class="token punctuation">(</span>w<span class="token punctuation">,</span> r<span class="token punctuation">)</span></span>
+<span class="line">    <span class="token punctuation">}</span><span class="token punctuation">)</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
+</ol>
+<h2 id="deployment-architecture" tabindex="-1"><a class="header-anchor" href="#deployment-architecture"><span>Deployment Architecture</span></a></h2>
+<h3 id="infrastructure" tabindex="-1"><a class="header-anchor" href="#infrastructure"><span>Infrastructure</span></a></h3>
+<ol>
+<li>
+<p><strong>AWS Infrastructure</strong></p>
+<div class="language-hcl line-numbers-mode" data-highlighter="prismjs" data-ext="hcl"><pre v-pre><code><span class="line"><span class="token comment"># AWS infrastructure</span></span>
+<span class="line"><span class="token keyword">provider<span class="token type variable"> "aws" </span></span><span class="token punctuation">{</span></span>
+<span class="line">  <span class="token property">region</span> <span class="token punctuation">=</span> <span class="token string">"us-west-2"</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># VPC</span></span>
+<span class="line"><span class="token keyword">resource <span class="token type variable">"aws_vpc"</span></span> <span class="token string">"main"</span> <span class="token punctuation">{</span></span>
+<span class="line">  <span class="token property">cidr_block</span> <span class="token punctuation">=</span> <span class="token string">"10.0.0.0/16"</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># ECS Cluster</span></span>
+<span class="line"><span class="token keyword">resource <span class="token type variable">"aws_ecs_cluster"</span></span> <span class="token string">"main"</span> <span class="token punctuation">{</span></span>
+<span class="line">  <span class="token property">name</span> <span class="token punctuation">=</span> <span class="token string">"foodhouse"</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># RDS</span></span>
+<span class="line"><span class="token keyword">resource <span class="token type variable">"aws_db_instance"</span></span> <span class="token string">"main"</span> <span class="token punctuation">{</span></span>
+<span class="line">  <span class="token property">engine</span>         <span class="token punctuation">=</span> <span class="token string">"postgres"</span></span>
+<span class="line">  <span class="token property">instance_class</span> <span class="token punctuation">=</span> <span class="token string">"db.t3.micro"</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># ElastiCache</span></span>
+<span class="line"><span class="token keyword">resource <span class="token type variable">"aws_elasticache_cluster"</span></span> <span class="token string">"main"</span> <span class="token punctuation">{</span></span>
+<span class="line">  <span class="token property">engine</span>         <span class="token punctuation">=</span> <span class="token string">"redis"</span></span>
+<span class="line">  <span class="token property">node_type</span>      <span class="token punctuation">=</span> <span class="token string">"cache.t3.micro"</span></span>
+<span class="line">  <span class="token property">num_cache_nodes</span> <span class="token punctuation">=</span> <span class="token number">1</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
+<li>
+<p><strong>Kubernetes Configuration</strong></p>
+<div class="language-yaml line-numbers-mode" data-highlighter="prismjs" data-ext="yml"><pre v-pre><code><span class="line"><span class="token comment"># Kubernetes deployment</span></span>
+<span class="line"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apps/v1</span>
+<span class="line"><span class="token key atrule">kind</span><span class="token punctuation">:</span> Deployment</span>
+<span class="line"><span class="token key atrule">metadata</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token key atrule">name</span><span class="token punctuation">:</span> users<span class="token punctuation">-</span>service</span>
+<span class="line"><span class="token key atrule">spec</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token key atrule">replicas</span><span class="token punctuation">:</span> <span class="token number">3</span></span>
+<span class="line">  <span class="token key atrule">selector</span><span class="token punctuation">:</span></span>
+<span class="line">    <span class="token key atrule">matchLabels</span><span class="token punctuation">:</span></span>
+<span class="line">      <span class="token key atrule">app</span><span class="token punctuation">:</span> users<span class="token punctuation">-</span>service</span>
+<span class="line">  <span class="token key atrule">template</span><span class="token punctuation">:</span></span>
+<span class="line">    <span class="token key atrule">metadata</span><span class="token punctuation">:</span></span>
+<span class="line">      <span class="token key atrule">labels</span><span class="token punctuation">:</span></span>
+<span class="line">        <span class="token key atrule">app</span><span class="token punctuation">:</span> users<span class="token punctuation">-</span>service</span>
+<span class="line">    <span class="token key atrule">spec</span><span class="token punctuation">:</span></span>
+<span class="line">      <span class="token key atrule">containers</span><span class="token punctuation">:</span></span>
+<span class="line">      <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> users<span class="token punctuation">-</span>service</span>
+<span class="line">        <span class="token key atrule">image</span><span class="token punctuation">:</span> foodhouse/users<span class="token punctuation">-</span>service<span class="token punctuation">:</span>latest</span>
+<span class="line">        <span class="token key atrule">ports</span><span class="token punctuation">:</span></span>
+<span class="line">        <span class="token punctuation">-</span> <span class="token key atrule">containerPort</span><span class="token punctuation">:</span> <span class="token number">8080</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
+</ol>
+<h3 id="monitoring" tabindex="-1"><a class="header-anchor" href="#monitoring"><span>Monitoring</span></a></h3>
+<ol>
+<li>
+<p><strong>Prometheus Configuration</strong></p>
+<div class="language-yaml line-numbers-mode" data-highlighter="prismjs" data-ext="yml"><pre v-pre><code><span class="line"><span class="token comment"># Prometheus configuration</span></span>
+<span class="line"><span class="token key atrule">global</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token key atrule">scrape_interval</span><span class="token punctuation">:</span> 15s</span>
+<span class="line">  <span class="token key atrule">evaluation_interval</span><span class="token punctuation">:</span> 15s</span>
+<span class="line"></span>
+<span class="line"><span class="token key atrule">scrape_configs</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token punctuation">-</span> <span class="token key atrule">job_name</span><span class="token punctuation">:</span> <span class="token string">'users-service'</span></span>
+<span class="line">    <span class="token key atrule">static_configs</span><span class="token punctuation">:</span></span>
+<span class="line">      <span class="token punctuation">-</span> <span class="token key atrule">targets</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'users-service:8080'</span><span class="token punctuation">]</span></span>
+<span class="line">  <span class="token punctuation">-</span> <span class="token key atrule">job_name</span><span class="token punctuation">:</span> <span class="token string">'products-service'</span></span>
+<span class="line">    <span class="token key atrule">static_configs</span><span class="token punctuation">:</span></span>
+<span class="line">      <span class="token punctuation">-</span> <span class="token key atrule">targets</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'products-service:8080'</span><span class="token punctuation">]</span></span>
+<span class="line">  <span class="token punctuation">-</span> <span class="token key atrule">job_name</span><span class="token punctuation">:</span> <span class="token string">'orders-service'</span></span>
+<span class="line">    <span class="token key atrule">static_configs</span><span class="token punctuation">:</span></span>
+<span class="line">      <span class="token punctuation">-</span> <span class="token key atrule">targets</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'orders-service:8080'</span><span class="token punctuation">]</span></span>
+<span class="line">  <span class="token punctuation">-</span> <span class="token key atrule">job_name</span><span class="token punctuation">:</span> <span class="token string">'payments-service'</span></span>
+<span class="line">    <span class="token key atrule">static_configs</span><span class="token punctuation">:</span></span>
+<span class="line">      <span class="token punctuation">-</span> <span class="token key atrule">targets</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'payments-service:8080'</span><span class="token punctuation">]</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
+<li>
+<p><strong>Grafana Dashboards</strong></p>
+<div class="language-json line-numbers-mode" data-highlighter="prismjs" data-ext="json"><pre v-pre><code><span class="line"><span class="token punctuation">{</span></span>
+<span class="line">  <span class="token property">"dashboard"</span><span class="token operator">:</span> <span class="token punctuation">{</span></span>
+<span class="line">    <span class="token property">"id"</span><span class="token operator">:</span> <span class="token null keyword">null</span><span class="token punctuation">,</span></span>
+<span class="line">    <span class="token property">"title"</span><span class="token operator">:</span> <span class="token string">"FoodHouse Services"</span><span class="token punctuation">,</span></span>
+<span class="line">    <span class="token property">"panels"</span><span class="token operator">:</span> <span class="token punctuation">[</span></span>
+<span class="line">      <span class="token punctuation">{</span></span>
+<span class="line">        <span class="token property">"title"</span><span class="token operator">:</span> <span class="token string">"Request Rate"</span><span class="token punctuation">,</span></span>
+<span class="line">        <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"graph"</span><span class="token punctuation">,</span></span>
+<span class="line">        <span class="token property">"datasource"</span><span class="token operator">:</span> <span class="token string">"Prometheus"</span><span class="token punctuation">,</span></span>
+<span class="line">        <span class="token property">"targets"</span><span class="token operator">:</span> <span class="token punctuation">[</span></span>
+<span class="line">          <span class="token punctuation">{</span></span>
+<span class="line">            <span class="token property">"expr"</span><span class="token operator">:</span> <span class="token string">"rate(http_requests_total[5m])"</span><span class="token punctuation">,</span></span>
+<span class="line">            <span class="token property">"legendFormat"</span><span class="token operator">:</span> <span class="token string">"{{service}}"</span></span>
+<span class="line">          <span class="token punctuation">}</span></span>
+<span class="line">        <span class="token punctuation">]</span></span>
+<span class="line">      <span class="token punctuation">}</span><span class="token punctuation">,</span></span>
+<span class="line">      <span class="token punctuation">{</span></span>
+<span class="line">        <span class="token property">"title"</span><span class="token operator">:</span> <span class="token string">"Error Rate"</span><span class="token punctuation">,</span></span>
+<span class="line">        <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"graph"</span><span class="token punctuation">,</span></span>
+<span class="line">        <span class="token property">"datasource"</span><span class="token operator">:</span> <span class="token string">"Prometheus"</span><span class="token punctuation">,</span></span>
+<span class="line">        <span class="token property">"targets"</span><span class="token operator">:</span> <span class="token punctuation">[</span></span>
+<span class="line">          <span class="token punctuation">{</span></span>
+<span class="line">            <span class="token property">"expr"</span><span class="token operator">:</span> <span class="token string">"rate(http_errors_total[5m])"</span><span class="token punctuation">,</span></span>
+<span class="line">            <span class="token property">"legendFormat"</span><span class="token operator">:</span> <span class="token string">"{{service}}"</span></span>
+<span class="line">          <span class="token punctuation">}</span></span>
+<span class="line">        <span class="token punctuation">]</span></span>
+<span class="line">      <span class="token punctuation">}</span></span>
+<span class="line">    <span class="token punctuation">]</span></span>
+<span class="line">  <span class="token punctuation">}</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
+</ol>
+<h2 id="security-architecture" tabindex="-1"><a class="header-anchor" href="#security-architecture"><span>Security Architecture</span></a></h2>
+<h3 id="authentication" tabindex="-1"><a class="header-anchor" href="#authentication"><span>Authentication</span></a></h3>
+<ol>
+<li>
+<p><strong>JWT Authentication</strong></p>
+<div class="language-go line-numbers-mode" data-highlighter="prismjs" data-ext="go"><pre v-pre><code><span class="line"><span class="token comment">// JWT configuration</span></span>
+<span class="line"><span class="token keyword">type</span> JWTConfig <span class="token keyword">struct</span> <span class="token punctuation">{</span></span>
+<span class="line">    SecretKey     <span class="token builtin">string</span></span>
+<span class="line">    ExpiryHours   <span class="token builtin">int</span></span>
+<span class="line">    RefreshHours  <span class="token builtin">int</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="token comment">// JWT service</span></span>
+<span class="line"><span class="token keyword">type</span> JWTService <span class="token keyword">struct</span> <span class="token punctuation">{</span></span>
+<span class="line">    config JWTConfig</span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="token comment">// Generate token</span></span>
+<span class="line"><span class="token keyword">func</span> <span class="token punctuation">(</span>s <span class="token operator">*</span>JWTService<span class="token punctuation">)</span> <span class="token function">GenerateToken</span><span class="token punctuation">(</span>user <span class="token operator">*</span>User<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">string</span><span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">    claims <span class="token operator">:=</span> jwt<span class="token punctuation">.</span>MapClaims<span class="token punctuation">{</span></span>
+<span class="line">        <span class="token string">"user_id"</span><span class="token punctuation">:</span> user<span class="token punctuation">.</span>ID<span class="token punctuation">,</span></span>
+<span class="line">        <span class="token string">"email"</span><span class="token punctuation">:</span>   user<span class="token punctuation">.</span>Email<span class="token punctuation">,</span></span>
+<span class="line">        <span class="token string">"role"</span><span class="token punctuation">:</span>    user<span class="token punctuation">.</span>Role<span class="token punctuation">,</span></span>
+<span class="line">        <span class="token string">"exp"</span><span class="token punctuation">:</span>     time<span class="token punctuation">.</span><span class="token function">Now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span>time<span class="token punctuation">.</span>Hour <span class="token operator">*</span> time<span class="token punctuation">.</span><span class="token function">Duration</span><span class="token punctuation">(</span>s<span class="token punctuation">.</span>config<span class="token punctuation">.</span>ExpiryHours<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">Unix</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span></span>
+<span class="line">    <span class="token punctuation">}</span></span>
+<span class="line">    token <span class="token operator">:=</span> jwt<span class="token punctuation">.</span><span class="token function">NewWithClaims</span><span class="token punctuation">(</span>jwt<span class="token punctuation">.</span>SigningMethodHS256<span class="token punctuation">,</span> claims<span class="token punctuation">)</span></span>
+<span class="line">    <span class="token keyword">return</span> token<span class="token punctuation">.</span><span class="token function">SignedString</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token function">byte</span><span class="token punctuation">(</span>s<span class="token punctuation">.</span>config<span class="token punctuation">.</span>SecretKey<span class="token punctuation">)</span><span class="token punctuation">)</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
+<li>
+<p><strong>OAuth2 Integration</strong></p>
+<div class="language-go line-numbers-mode" data-highlighter="prismjs" data-ext="go"><pre v-pre><code><span class="line"><span class="token comment">// OAuth2 configuration</span></span>
+<span class="line"><span class="token keyword">type</span> OAuth2Config <span class="token keyword">struct</span> <span class="token punctuation">{</span></span>
+<span class="line">    ClientID     <span class="token builtin">string</span></span>
+<span class="line">    ClientSecret <span class="token builtin">string</span></span>
+<span class="line">    RedirectURL  <span class="token builtin">string</span></span>
+<span class="line">    Scopes       <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="token comment">// OAuth2 service</span></span>
+<span class="line"><span class="token keyword">type</span> OAuth2Service <span class="token keyword">struct</span> <span class="token punctuation">{</span></span>
+<span class="line">    config OAuth2Config</span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="token comment">// Authenticate with OAuth2</span></span>
+<span class="line"><span class="token keyword">func</span> <span class="token punctuation">(</span>s <span class="token operator">*</span>OAuth2Service<span class="token punctuation">)</span> <span class="token function">Authenticate</span><span class="token punctuation">(</span>code <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">*</span>User<span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">    <span class="token comment">// Exchange code for token</span></span>
+<span class="line">    <span class="token comment">// Get user info</span></span>
+<span class="line">    <span class="token comment">// Create or update user</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
+</ol>
+<h3 id="authorization" tabindex="-1"><a class="header-anchor" href="#authorization"><span>Authorization</span></a></h3>
+<ol>
+<li>
+<p><strong>Role-Based Access Control</strong></p>
+<div class="language-go line-numbers-mode" data-highlighter="prismjs" data-ext="go"><pre v-pre><code><span class="line"><span class="token comment">// Role definitions</span></span>
+<span class="line"><span class="token keyword">type</span> Role <span class="token builtin">string</span></span>
+<span class="line"></span>
+<span class="line"><span class="token keyword">const</span> <span class="token punctuation">(</span></span>
+<span class="line">    RoleAdmin    Role <span class="token operator">=</span> <span class="token string">"admin"</span></span>
+<span class="line">    RoleMerchant Role <span class="token operator">=</span> <span class="token string">"merchant"</span></span>
+<span class="line">    RoleCustomer Role <span class="token operator">=</span> <span class="token string">"customer"</span></span>
+<span class="line"><span class="token punctuation">)</span></span>
+<span class="line"></span>
+<span class="line"><span class="token comment">// Permission definitions</span></span>
+<span class="line"><span class="token keyword">type</span> Permission <span class="token builtin">string</span></span>
+<span class="line"></span>
+<span class="line"><span class="token keyword">const</span> <span class="token punctuation">(</span></span>
+<span class="line">    PermissionCreateProduct Permission <span class="token operator">=</span> <span class="token string">"create:product"</span></span>
+<span class="line">    PermissionUpdateProduct Permission <span class="token operator">=</span> <span class="token string">"update:product"</span></span>
+<span class="line">    PermissionDeleteProduct Permission <span class="token operator">=</span> <span class="token string">"delete:product"</span></span>
+<span class="line"><span class="token punctuation">)</span></span>
+<span class="line"></span>
+<span class="line"><span class="token comment">// Check permission</span></span>
+<span class="line"><span class="token keyword">func</span> <span class="token punctuation">(</span>s <span class="token operator">*</span>Service<span class="token punctuation">)</span> <span class="token function">CheckPermission</span><span class="token punctuation">(</span>user <span class="token operator">*</span>User<span class="token punctuation">,</span> permission Permission<span class="token punctuation">)</span> <span class="token builtin">bool</span> <span class="token punctuation">{</span></span>
+<span class="line">    <span class="token comment">// Check user role</span></span>
+<span class="line">    <span class="token comment">// Check role permissions</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
+<li>
+<p><strong>Resource Ownership</strong></p>
+<div class="language-go line-numbers-mode" data-highlighter="prismjs" data-ext="go"><pre v-pre><code><span class="line"><span class="token comment">// Resource ownership check</span></span>
+<span class="line"><span class="token keyword">func</span> <span class="token punctuation">(</span>s <span class="token operator">*</span>Service<span class="token punctuation">)</span> <span class="token function">CheckOwnership</span><span class="token punctuation">(</span>user <span class="token operator">*</span>User<span class="token punctuation">,</span> resource Resource<span class="token punctuation">)</span> <span class="token builtin">bool</span> <span class="token punctuation">{</span></span>
+<span class="line">    <span class="token keyword">switch</span> r <span class="token operator">:=</span> resource<span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token keyword">type</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">    <span class="token keyword">case</span> <span class="token operator">*</span>Product<span class="token punctuation">:</span></span>
+<span class="line">        <span class="token keyword">return</span> r<span class="token punctuation">.</span>MerchantID <span class="token operator">==</span> user<span class="token punctuation">.</span>ID</span>
+<span class="line">    <span class="token keyword">case</span> <span class="token operator">*</span>Order<span class="token punctuation">:</span></span>
+<span class="line">        <span class="token keyword">return</span> r<span class="token punctuation">.</span>UserID <span class="token operator">==</span> user<span class="token punctuation">.</span>ID</span>
+<span class="line">    <span class="token keyword">default</span><span class="token punctuation">:</span></span>
+<span class="line">        <span class="token keyword">return</span> <span class="token boolean">false</span></span>
+<span class="line">    <span class="token punctuation">}</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
+</ol>
+<h2 id="performance-architecture" tabindex="-1"><a class="header-anchor" href="#performance-architecture"><span>Performance Architecture</span></a></h2>
+<h3 id="caching" tabindex="-1"><a class="header-anchor" href="#caching"><span>Caching</span></a></h3>
+<ol>
+<li>
+<p><strong>Cache Strategy</strong></p>
+<div class="language-go line-numbers-mode" data-highlighter="prismjs" data-ext="go"><pre v-pre><code><span class="line"><span class="token comment">// Cache strategy</span></span>
+<span class="line"><span class="token keyword">type</span> CacheStrategy <span class="token keyword">struct</span> <span class="token punctuation">{</span></span>
+<span class="line">    TTL           time<span class="token punctuation">.</span>Duration</span>
+<span class="line">    MaxSize       <span class="token builtin">int</span></span>
+<span class="line">    EvictionPolicy <span class="token builtin">string</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="token comment">// Cache implementation</span></span>
+<span class="line"><span class="token keyword">type</span> Cache <span class="token keyword">struct</span> <span class="token punctuation">{</span></span>
+<span class="line">    strategy CacheStrategy</span>
+<span class="line">    store    <span class="token operator">*</span>redis<span class="token punctuation">.</span>Client</span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="token comment">// Get with cache</span></span>
+<span class="line"><span class="token keyword">func</span> <span class="token punctuation">(</span>c <span class="token operator">*</span>Cache<span class="token punctuation">)</span> <span class="token function">GetWithCache</span><span class="token punctuation">(</span>ctx context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> key <span class="token builtin">string</span><span class="token punctuation">,</span> fn <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token keyword">interface</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token keyword">interface</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">    <span class="token comment">// Try cache</span></span>
+<span class="line">    <span class="token comment">// If miss, call function</span></span>
+<span class="line">    <span class="token comment">// Store in cache</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
+<li>
+<p><strong>Cache Invalidation</strong></p>
+<div class="language-go line-numbers-mode" data-highlighter="prismjs" data-ext="go"><pre v-pre><code><span class="line"><span class="token comment">// Cache invalidation</span></span>
+<span class="line"><span class="token keyword">func</span> <span class="token punctuation">(</span>c <span class="token operator">*</span>Cache<span class="token punctuation">)</span> <span class="token function">Invalidate</span><span class="token punctuation">(</span>ctx context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> pattern <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">error</span> <span class="token punctuation">{</span></span>
+<span class="line">    <span class="token comment">// Find keys</span></span>
+<span class="line">    <span class="token comment">// Delete keys</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="token comment">// Cache update</span></span>
+<span class="line"><span class="token keyword">func</span> <span class="token punctuation">(</span>c <span class="token operator">*</span>Cache<span class="token punctuation">)</span> <span class="token function">Update</span><span class="token punctuation">(</span>ctx context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> key <span class="token builtin">string</span><span class="token punctuation">,</span> value <span class="token keyword">interface</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token builtin">error</span> <span class="token punctuation">{</span></span>
+<span class="line">    <span class="token comment">// Update cache</span></span>
+<span class="line">    <span class="token comment">// Publish event</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
+</ol>
+<h3 id="load-balancing" tabindex="-1"><a class="header-anchor" href="#load-balancing"><span>Load Balancing</span></a></h3>
+<ol>
+<li>
+<p><strong>Load Balancer Configuration</strong></p>
+<div class="language-yaml line-numbers-mode" data-highlighter="prismjs" data-ext="yml"><pre v-pre><code><span class="line"><span class="token comment"># Load balancer configuration</span></span>
+<span class="line"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1</span>
+<span class="line"><span class="token key atrule">kind</span><span class="token punctuation">:</span> Service</span>
+<span class="line"><span class="token key atrule">metadata</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token key atrule">name</span><span class="token punctuation">:</span> users<span class="token punctuation">-</span>service</span>
+<span class="line"><span class="token key atrule">spec</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token key atrule">type</span><span class="token punctuation">:</span> LoadBalancer</span>
+<span class="line">  <span class="token key atrule">ports</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token punctuation">-</span> <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">80</span></span>
+<span class="line">    <span class="token key atrule">targetPort</span><span class="token punctuation">:</span> <span class="token number">8080</span></span>
+<span class="line">  <span class="token key atrule">selector</span><span class="token punctuation">:</span></span>
+<span class="line">    <span class="token key atrule">app</span><span class="token punctuation">:</span> users<span class="token punctuation">-</span>service</span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
+<li>
+<p><strong>Service Discovery</strong></p>
+<div class="language-go line-numbers-mode" data-highlighter="prismjs" data-ext="go"><pre v-pre><code><span class="line"><span class="token comment">// Service discovery</span></span>
+<span class="line"><span class="token keyword">type</span> ServiceDiscovery <span class="token keyword">struct</span> <span class="token punctuation">{</span></span>
+<span class="line">    client <span class="token operator">*</span>consul<span class="token punctuation">.</span>Client</span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="token comment">// Register service</span></span>
+<span class="line"><span class="token keyword">func</span> <span class="token punctuation">(</span>s <span class="token operator">*</span>ServiceDiscovery<span class="token punctuation">)</span> <span class="token function">Register</span><span class="token punctuation">(</span>service <span class="token operator">*</span>Service<span class="token punctuation">)</span> <span class="token builtin">error</span> <span class="token punctuation">{</span></span>
+<span class="line">    <span class="token comment">// Register with Consul</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="token comment">// Discover service</span></span>
+<span class="line"><span class="token keyword">func</span> <span class="token punctuation">(</span>s <span class="token operator">*</span>ServiceDiscovery<span class="token punctuation">)</span> <span class="token function">Discover</span><span class="token punctuation">(</span>name <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">*</span>Service<span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">    <span class="token comment">// Discover from Consul</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
+</ol>
+<h2 id="scalability-architecture" tabindex="-1"><a class="header-anchor" href="#scalability-architecture"><span>Scalability Architecture</span></a></h2>
+<h3 id="horizontal-scaling" tabindex="-1"><a class="header-anchor" href="#horizontal-scaling"><span>Horizontal Scaling</span></a></h3>
+<ol>
+<li>
+<p><strong>Auto Scaling</strong></p>
+<div class="language-yaml line-numbers-mode" data-highlighter="prismjs" data-ext="yml"><pre v-pre><code><span class="line"><span class="token comment"># Auto scaling configuration</span></span>
+<span class="line"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> autoscaling/v2</span>
+<span class="line"><span class="token key atrule">kind</span><span class="token punctuation">:</span> HorizontalPodAutoscaler</span>
+<span class="line"><span class="token key atrule">metadata</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token key atrule">name</span><span class="token punctuation">:</span> users<span class="token punctuation">-</span>service</span>
+<span class="line"><span class="token key atrule">spec</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token key atrule">scaleTargetRef</span><span class="token punctuation">:</span></span>
+<span class="line">    <span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apps/v1</span>
+<span class="line">    <span class="token key atrule">kind</span><span class="token punctuation">:</span> Deployment</span>
+<span class="line">    <span class="token key atrule">name</span><span class="token punctuation">:</span> users<span class="token punctuation">-</span>service</span>
+<span class="line">  <span class="token key atrule">minReplicas</span><span class="token punctuation">:</span> <span class="token number">3</span></span>
+<span class="line">  <span class="token key atrule">maxReplicas</span><span class="token punctuation">:</span> <span class="token number">10</span></span>
+<span class="line">  <span class="token key atrule">metrics</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token punctuation">-</span> <span class="token key atrule">type</span><span class="token punctuation">:</span> Resource</span>
+<span class="line">    <span class="token key atrule">resource</span><span class="token punctuation">:</span></span>
+<span class="line">      <span class="token key atrule">name</span><span class="token punctuation">:</span> cpu</span>
+<span class="line">      <span class="token key atrule">target</span><span class="token punctuation">:</span></span>
+<span class="line">        <span class="token key atrule">type</span><span class="token punctuation">:</span> Utilization</span>
+<span class="line">        <span class="token key atrule">averageUtilization</span><span class="token punctuation">:</span> <span class="token number">70</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
+<li>
+<p><strong>Database Scaling</strong></p>
+<div class="language-yaml line-numbers-mode" data-highlighter="prismjs" data-ext="yml"><pre v-pre><code><span class="line"><span class="token comment"># Database scaling configuration</span></span>
+<span class="line"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1</span>
+<span class="line"><span class="token key atrule">kind</span><span class="token punctuation">:</span> Service</span>
+<span class="line"><span class="token key atrule">metadata</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token key atrule">name</span><span class="token punctuation">:</span> postgres<span class="token punctuation">-</span>primary</span>
+<span class="line"><span class="token key atrule">spec</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token key atrule">type</span><span class="token punctuation">:</span> ClusterIP</span>
+<span class="line">  <span class="token key atrule">ports</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token punctuation">-</span> <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">5432</span></span>
+<span class="line">  <span class="token key atrule">selector</span><span class="token punctuation">:</span></span>
+<span class="line">    <span class="token key atrule">app</span><span class="token punctuation">:</span> postgres</span>
+<span class="line">    <span class="token key atrule">role</span><span class="token punctuation">:</span> primary</span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
+</ol>
+<h3 id="vertical-scaling" tabindex="-1"><a class="header-anchor" href="#vertical-scaling"><span>Vertical Scaling</span></a></h3>
+<ol>
+<li>
+<p><strong>Resource Limits</strong></p>
+<div class="language-yaml line-numbers-mode" data-highlighter="prismjs" data-ext="yml"><pre v-pre><code><span class="line"><span class="token comment"># Resource limits</span></span>
+<span class="line"><span class="token key atrule">resources</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token key atrule">requests</span><span class="token punctuation">:</span></span>
+<span class="line">    <span class="token key atrule">cpu</span><span class="token punctuation">:</span> <span class="token string">"500m"</span></span>
+<span class="line">    <span class="token key atrule">memory</span><span class="token punctuation">:</span> <span class="token string">"512Mi"</span></span>
+<span class="line">  <span class="token key atrule">limits</span><span class="token punctuation">:</span></span>
+<span class="line">    <span class="token key atrule">cpu</span><span class="token punctuation">:</span> <span class="token string">"1000m"</span></span>
+<span class="line">    <span class="token key atrule">memory</span><span class="token punctuation">:</span> <span class="token string">"1Gi"</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
+<li>
+<p><strong>Database Resources</strong></p>
+<div class="language-yaml line-numbers-mode" data-highlighter="prismjs" data-ext="yml"><pre v-pre><code><span class="line"><span class="token comment"># Database resources</span></span>
+<span class="line"><span class="token key atrule">resources</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token key atrule">requests</span><span class="token punctuation">:</span></span>
+<span class="line">    <span class="token key atrule">cpu</span><span class="token punctuation">:</span> <span class="token string">"1000m"</span></span>
+<span class="line">    <span class="token key atrule">memory</span><span class="token punctuation">:</span> <span class="token string">"2Gi"</span></span>
+<span class="line">  <span class="token key atrule">limits</span><span class="token punctuation">:</span></span>
+<span class="line">    <span class="token key atrule">cpu</span><span class="token punctuation">:</span> <span class="token string">"2000m"</span></span>
+<span class="line">    <span class="token key atrule">memory</span><span class="token punctuation">:</span> <span class="token string">"4Gi"</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
+</ol>
+<h2 id="disaster-recovery" tabindex="-1"><a class="header-anchor" href="#disaster-recovery"><span>Disaster Recovery</span></a></h2>
+<h3 id="backup-strategy" tabindex="-1"><a class="header-anchor" href="#backup-strategy"><span>Backup Strategy</span></a></h3>
+<ol>
+<li>
+<p><strong>Database Backup</strong></p>
+<div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre v-pre><code><span class="line"><span class="token comment"># Database backup script</span></span>
+<span class="line"><span class="token comment">#!/bin/bash</span></span>
+<span class="line"><span class="token assign-left variable">BACKUP_DIR</span><span class="token operator">=</span><span class="token string">"/backups"</span></span>
+<span class="line"><span class="token assign-left variable">TIMESTAMP</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token function">date</span> +%Y%m%d_%H%M%S<span class="token variable">)</span></span></span>
+<span class="line">pg_dump <span class="token parameter variable">-h</span> <span class="token variable">$DB_HOST</span> <span class="token parameter variable">-U</span> <span class="token variable">$DB_USER</span> <span class="token parameter variable">-d</span> <span class="token variable">$DB_NAME</span> <span class="token operator">></span> <span class="token string">"<span class="token variable">$BACKUP_DIR</span>/backup_<span class="token variable">$TIMESTAMP</span>.sql"</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
+<li>
+<p><strong>File Backup</strong></p>
+<div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre v-pre><code><span class="line"><span class="token comment"># File backup script</span></span>
+<span class="line"><span class="token comment">#!/bin/bash</span></span>
+<span class="line"><span class="token assign-left variable">BACKUP_DIR</span><span class="token operator">=</span><span class="token string">"/backups"</span></span>
+<span class="line"><span class="token assign-left variable">TIMESTAMP</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token function">date</span> +%Y%m%d_%H%M%S<span class="token variable">)</span></span></span>
+<span class="line"><span class="token function">tar</span> <span class="token parameter variable">-czf</span> <span class="token string">"<span class="token variable">$BACKUP_DIR</span>/files_<span class="token variable">$TIMESTAMP</span>.tar.gz"</span> /data</span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
+</ol>
+<h3 id="recovery-strategy" tabindex="-1"><a class="header-anchor" href="#recovery-strategy"><span>Recovery Strategy</span></a></h3>
+<ol>
+<li>
+<p><strong>Database Recovery</strong></p>
+<div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre v-pre><code><span class="line"><span class="token comment"># Database recovery script</span></span>
+<span class="line"><span class="token comment">#!/bin/bash</span></span>
+<span class="line"><span class="token assign-left variable">BACKUP_FILE</span><span class="token operator">=</span><span class="token variable">$1</span></span>
+<span class="line">psql <span class="token parameter variable">-h</span> <span class="token variable">$DB_HOST</span> <span class="token parameter variable">-U</span> <span class="token variable">$DB_USER</span> <span class="token parameter variable">-d</span> <span class="token variable">$DB_NAME</span> <span class="token operator">&lt;</span> <span class="token string">"<span class="token variable">$BACKUP_FILE</span>"</span></span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
+<li>
+<p><strong>Service Recovery</strong></p>
+<div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre v-pre><code><span class="line"><span class="token comment"># Service recovery script</span></span>
+<span class="line"><span class="token comment">#!/bin/bash</span></span>
+<span class="line">kubectl rollout restart deployment/users-service</span>
+<span class="line">kubectl rollout restart deployment/products-service</span>
+<span class="line">kubectl rollout restart deployment/orders-service</span>
+<span class="line">kubectl rollout restart deployment/payments-service</span>
+<span class="line"></span></code></pre>
+<div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
+</ol>
+<h2 id="future-architecture" tabindex="-1"><a class="header-anchor" href="#future-architecture"><span>Future Architecture</span></a></h2>
+<h3 id="planned-improvements" tabindex="-1"><a class="header-anchor" href="#planned-improvements"><span>Planned Improvements</span></a></h3>
+<ol>
+<li>
+<p><strong>Service Mesh</strong></p>
+<ul>
+<li>Istio integration</li>
+<li>Traffic management</li>
+<li>Security policies</li>
+<li>Observability</li>
+</ul>
+</li>
+<li>
+<p><strong>Event Sourcing</strong></p>
+<ul>
+<li>Event store</li>
+<li>CQRS pattern</li>
+<li>Event replay</li>
+<li>Event versioning</li>
+</ul>
+</li>
+<li>
+<p><strong>Machine Learning</strong></p>
+<ul>
+<li>Recommendation engine</li>
+<li>Fraud detection</li>
+<li>Price optimization</li>
+<li>Demand forecasting</li>
+</ul>
+</li>
+</ol>
+<h3 id="architecture-evolution" tabindex="-1"><a class="header-anchor" href="#architecture-evolution"><span>Architecture Evolution</span></a></h3>
+<ol>
+<li>
+<p><strong>Phase 1: Foundation</strong></p>
+<ul>
+<li>Microservices architecture</li>
+<li>Basic monitoring</li>
+<li>Simple scaling</li>
+</ul>
+</li>
+<li>
+<p><strong>Phase 2: Enhancement</strong></p>
+<ul>
+<li>Service mesh</li>
+<li>Advanced monitoring</li>
+<li>Auto scaling</li>
+</ul>
+</li>
+<li>
+<p><strong>Phase 3: Innovation</strong></p>
+<ul>
+<li>Event sourcing</li>
+<li>Machine learning</li>
+<li>Real-time analytics</li>
+</ul>
+</li>
+</ol>
+</div></template>
+
+

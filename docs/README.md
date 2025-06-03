@@ -1,36 +1,59 @@
 ---
 home: true
-title: Home
+title: FoodHouse Documentation
 heroImage: https://vuejs.press/images/hero.png
 actions:
   - text: Get Started
-    link: /get-started.html
+    link: /development.html
     type: primary
-
-  - text: Introduction
-    link: https://vuejs.press/guide/introduction.html
+  - text: System Overview
+    link: /system-overview.html
     type: secondary
 
 features:
-  - title: Simplicity First
-    details: Minimal setup with markdown-centered project structure helps you focus on writing.
-  - title: Vue-Powered
-    details: Enjoy the dev experience of Vue, use Vue components in markdown, and develop custom themes with Vue.
-  - title: Performant
-    details: VuePress generates pre-rendered static HTML for each page, and runs as an SPA once a page is loaded.
-  - title: Themes
-    details: Providing a default theme out of the box. You can also choose a community theme or create your own one.
-  - title: Plugins
-    details: Flexible plugin API, allowing plugins to provide lots of plug-and-play features for your site.
-  - title: Bundlers
-    details: Default bundler is Vite, while Webpack is also supported. Choose the one you like!
+  - title: E-commerce Platform
+    details: A comprehensive e-commerce platform specialized in agricultural produce trading and management.
+  - title: Modern Architecture
+    details: Built with modern technologies and best practices for scalability and performance.
+  - title: Developer Friendly
+    details: Well-documented APIs, clear architecture, and comprehensive guides for developers.
+  - title: Secure & Reliable
+    details: Enterprise-grade security features and robust error handling for reliable operations.
+  - title: Easy Integration
+    details: Simple API integration with detailed documentation and example implementations.
+  - title: Scalable Solution
+    details: Designed to scale with your business needs, from small farms to large agricultural enterprises.
 
-footer: MIT Licensed | Copyright © 2018-present VuePress Community
+footer: MIT Licensed | Copyright © 2025 FoodHouse
 ---
 
-This is the content of home page. Check [Home Page Docs][default-theme-home] for more details.
+# Welcome to FoodHouse
 
-[default-theme-home]: https://vuejs.press/reference/default-theme/frontmatter.html#home-page
+Welcome to the FoodHouse documentation. This documentation provides comprehensive information about the FoodHouse e-commerce platform for agricultural produce.
+
+## Quick Start
+
+To get started with FoodHouse:
+
+1. Clone the repository
+2. Follow the [Development Guide](./development.md) for local setup
+3. Refer to [Deployment Guide](./deployment.md) for production deployment
+4. Check [API Documentation](./api-documentation.md) for integration details
+
+## Documentation Sections
+
+- [System Overview](./system-overview.md) - High-level system architecture and components
+- [Architecture](./architecture.md) - Detailed technical architecture and design decisions
+- [API Documentation](./api-documentation.md) - Complete API reference and integration guides
+- [Database Schema](./database-schema.md) - Database structure and relationships
+- [Deployment Guide](./deployment.md) - Production deployment instructions
+- [Development Guide](./development.md) - Local development setup and guidelines
+- [Security](./security.md) - Security features and best practices
+- [Testing](./testing.md) - Testing strategies and implementation
+
+## Contributing
+
+Please read our [Contributing Guide](./contributing.md) before submitting any changes.
 
 <!-- Enhanced login handling with auto-trigger -->
 <script>
@@ -69,4 +92,4 @@ export default {
     }
   }
 }
-</script>
+</script> 

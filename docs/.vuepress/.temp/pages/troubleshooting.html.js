@@ -1,0 +1,16 @@
+import comp from "C:/Users/AJJ/Desktop/Personal/FoodHouse-CMR.github.io/docs/.vuepress/.temp/pages/troubleshooting.html.vue"
+const data = JSON.parse("{\"path\":\"/troubleshooting.html\",\"title\":\"Troubleshooting Guide\",\"lang\":\"en-US\",\"frontmatter\":{},\"headers\":[{\"level\":2,\"title\":\"Overview\",\"slug\":\"overview\",\"link\":\"#overview\",\"children\":[]},{\"level\":2,\"title\":\"Common Issues\",\"slug\":\"common-issues\",\"link\":\"#common-issues\",\"children\":[{\"level\":3,\"title\":\"Application Issues\",\"slug\":\"application-issues\",\"link\":\"#application-issues\",\"children\":[]},{\"level\":3,\"title\":\"Database Issues\",\"slug\":\"database-issues\",\"link\":\"#database-issues\",\"children\":[]},{\"level\":3,\"title\":\"Cache Issues\",\"slug\":\"cache-issues\",\"link\":\"#cache-issues\",\"children\":[]},{\"level\":3,\"title\":\"Message Queue Issues\",\"slug\":\"message-queue-issues\",\"link\":\"#message-queue-issues\",\"children\":[]}]},{\"level\":2,\"title\":\"Debugging Techniques\",\"slug\":\"debugging-techniques\",\"link\":\"#debugging-techniques\",\"children\":[{\"level\":3,\"title\":\"Logging\",\"slug\":\"logging\",\"link\":\"#logging\",\"children\":[]},{\"level\":3,\"title\":\"Tracing\",\"slug\":\"tracing\",\"link\":\"#tracing\",\"children\":[]},{\"level\":3,\"title\":\"Metrics\",\"slug\":\"metrics\",\"link\":\"#metrics\",\"children\":[]}]},{\"level\":2,\"title\":\"Error Handling\",\"slug\":\"error-handling\",\"link\":\"#error-handling\",\"children\":[{\"level\":3,\"title\":\"Error Types\",\"slug\":\"error-types\",\"link\":\"#error-types\",\"children\":[]},{\"level\":3,\"title\":\"Error Recovery\",\"slug\":\"error-recovery\",\"link\":\"#error-recovery\",\"children\":[]}]},{\"level\":2,\"title\":\"Problem Resolution\",\"slug\":\"problem-resolution\",\"link\":\"#problem-resolution\",\"children\":[{\"level\":3,\"title\":\"Performance Issues\",\"slug\":\"performance-issues\",\"link\":\"#performance-issues\",\"children\":[]},{\"level\":3,\"title\":\"Database Issues\",\"slug\":\"database-issues-1\",\"link\":\"#database-issues-1\",\"children\":[]},{\"level\":3,\"title\":\"Cache Issues\",\"slug\":\"cache-issues-1\",\"link\":\"#cache-issues-1\",\"children\":[]}]},{\"level\":2,\"title\":\"Monitoring and Alerts\",\"slug\":\"monitoring-and-alerts\",\"link\":\"#monitoring-and-alerts\",\"children\":[{\"level\":3,\"title\":\"Health Checks\",\"slug\":\"health-checks\",\"link\":\"#health-checks\",\"children\":[]},{\"level\":3,\"title\":\"Alerts\",\"slug\":\"alerts\",\"link\":\"#alerts\",\"children\":[]}]},{\"level\":2,\"title\":\"Best Practices\",\"slug\":\"best-practices\",\"link\":\"#best-practices\",\"children\":[{\"level\":3,\"title\":\"Debugging\",\"slug\":\"debugging\",\"link\":\"#debugging\",\"children\":[]},{\"level\":3,\"title\":\"Error Handling\",\"slug\":\"error-handling-1\",\"link\":\"#error-handling-1\",\"children\":[]},{\"level\":3,\"title\":\"Performance\",\"slug\":\"performance\",\"link\":\"#performance\",\"children\":[]}]}],\"git\":{},\"filePathRelative\":\"troubleshooting.md\"}")
+export { comp, data }
+
+if (import.meta.webpackHot) {
+  import.meta.webpackHot.accept()
+  if (__VUE_HMR_RUNTIME__.updatePageData) {
+    __VUE_HMR_RUNTIME__.updatePageData(data)
+  }
+}
+
+if (import.meta.hot) {
+  import.meta.hot.accept(({ data }) => {
+    __VUE_HMR_RUNTIME__.updatePageData(data)
+  })
+}
