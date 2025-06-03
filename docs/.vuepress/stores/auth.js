@@ -5,7 +5,7 @@ export const useAuthStore = defineStore('auth', {
   state: () => ({
     user: null,
     auth0client: null,
-    loading: false,
+    loading: true,
     error: null,
     initialized: false,
     initializationPromise: null,
@@ -26,25 +26,28 @@ export const useAuthStore = defineStore('auth', {
   
   actions: {
     async initializeAuth() {
-      if (typeof window === 'undefined') return null;
+      // If already initialized, return the client
       if (this.initialized) return this.auth0client;
+      
+      // If initialization is in progress, wait for it
       if (this.initializationPromise) return this.initializationPromise;
       
       this.initializationPromise = (async () => {
         try {
           this.loading = true;
           this.error = null;
-          this.auth0client = await auth.createClient();
           
-          if (this.auth0client) {
-            this.user = await this.auth0client.getUser();
+          // Wait for environment variables to be available
+          if (!auth.config.domain || !auth.config.clientId) {
+            await new Promise(resolve => setTimeout(resolve, 100));
           }
           
+          this.auth0client = await auth.createClient();
           this.initialized = true;
           return this.auth0client;
         } catch (error) {
+          console.error('Auth initialization error:', error);
           this.error = error.message;
-          throw error;
         } finally {
           this.loading = false;
           this.initializationPromise = null;
@@ -124,4 +127,4 @@ export const useAuthStore = defineStore('auth', {
       this.router = router;
     }
   }
-}) 
+})
