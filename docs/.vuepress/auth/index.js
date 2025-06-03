@@ -2,9 +2,9 @@ import { createAuth0Client } from "@auth0/auth0-spa-js";
 
 // Configuration with fallbacks for development
 const config = {
-  domain: import.meta.env.VITE_AUTH0_DOMAIN || "dev-u2nuf4qnpgxwrc0x.us.auth0.com",
-  clientId: import.meta.env.VITE_AUTH0_CLIENT_ID || "gflY16eZTriweM1HfDSq6PKCBqOteBUc",
-  redirectUri: import.meta.env.VITE_AUTH0_REDIRECT_URI || (typeof window !== 'undefined' ? window.location.origin : 'https://foodhouse-cmr.github.io')
+  domain: import.meta.env.VITE_AUTH0_DOMAIN,
+  clientId: import.meta.env.VITE_AUTH0_CLIENT_ID,
+  redirectUri: import.meta.env.VITE_AUTH0_REDIRECT_URI,
 };
 
 // Initialize auth client with retry mechanism
