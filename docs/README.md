@@ -27,43 +27,6 @@ features:
 footer: MIT Licensed | Copyright © 2025 FoodHouse
 ---
 
-# FoodHouse Platform
-
-Welcome to the FoodHouse documentation. FoodHouse is a specialized e-commerce platform designed for agricultural produce trading, connecting farmers directly with buyers in a secure and efficient marketplace.
-
-## Key Features
-
-- **Direct Farm-to-Consumer Trading**: Connect farmers directly with buyers
-- **Real-time Inventory Management**: Track produce availability and pricing
-- **Secure Payment Processing**: Integrated payment solutions with escrow services
-- **Quality Assurance**: Built-in quality control and verification processes
-- **Analytics Dashboard**: Comprehensive insights for both farmers and buyers
-- **Mobile-First Design**: Access the platform from any device
-
-## Quick Start
-
-To get started with FoodHouse:
-
-1. Clone the repository
-2. Follow the [Development Guide](./development.md) for local setup
-3. Refer to [Deployment Guide](./deployment.md) for production deployment
-4. Check [API Documentation](./api-documentation.md) for integration details
-
-## Documentation Sections
-
-- [System Overview](./system-overview.md) - High-level system architecture and components
-- [Architecture](./architecture.md) - Detailed technical architecture and design decisions
-- [API Documentation](./api-documentation.md) - Complete API reference and integration guides
-- [Database Schema](./database-schema.md) - Database structure and relationships
-- [Deployment Guide](./deployment.md) - Production deployment instructions
-- [Development Guide](./development.md) - Local development setup and guidelines
-- [Security](./security.md) - Security features and best practices
-- [Testing](./testing.md) - Testing strategies and implementation
-
-## Contributing
-
-Please read our [Contributing Guide](./contributing.md) before submitting any changes.
-
 <!-- Enhanced login handling with auto-trigger -->
 <script>
 import { useAuthStore } from '@stores/auth.js'

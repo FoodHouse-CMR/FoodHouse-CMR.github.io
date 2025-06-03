@@ -7,8 +7,8 @@ import { mdEnhancePlugin } from "vuepress-plugin-md-enhance";
 export default defineUserConfig({
   lang: 'en-US',
 
-  title: 'VuePress',
-  description: 'My first VuePress Site',
+  title: 'Food House',
+  description: 'A specialized e-commerce platform connecting farmers and buyers',
 
   theme: defaultTheme({
     logo: 'https://vuejs.press/images/hero.png',
