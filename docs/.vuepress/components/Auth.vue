@@ -120,21 +120,23 @@ export default {
   margin-left: 10px;
 }
 
+.vp-buttom {
+  font-weight: 500;
+}
 /* Login Button Styles */
 .vp-button--primary {
   padding: 8px 16px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 14px;
+  /* font-size: 14px; */
   transition: all 0.2s ease;
-  background-color: #007bff;
+  background-color:#3eaf7c;
   color: white;
 }
 
 .vp-button--primary:hover:not(:disabled) {
-  background-color: #0056b3;
-  transform: translateY(-1px);
+  background-color: #299764;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 

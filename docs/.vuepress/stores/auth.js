@@ -92,7 +92,7 @@ export const useAuthStore = defineStore('auth', {
           sessionStorage.removeItem('redirectAfterLogin');
           this.redirectTo(redirectPath);
         } else {
-          this.redirectTo('/dashboard');
+          this.redirectTo('/get-started');
         }
       } catch (error) {
         this.error = error.message;

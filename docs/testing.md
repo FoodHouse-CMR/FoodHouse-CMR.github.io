@@ -451,7 +451,7 @@ This guide provides comprehensive information about testing the FoodHouse applic
        await page.waitForNavigation()
 
        // Verify login success
-       expect(page.url()).toBe('http://localhost:3000/dashboard')
+       expect(page.url()).toBe('http://localhost:3000/get-started')
      })
    })
    ```

@@ -450,7 +450,7 @@
 <span class="line">    <span class="token keyword">await</span> page<span class="token punctuation">.</span><span class="token function">waitForNavigation</span><span class="token punctuation">(</span><span class="token punctuation">)</span></span>
 <span class="line"></span>
 <span class="line">    <span class="token comment">// Verify login success</span></span>
-<span class="line">    <span class="token function">expect</span><span class="token punctuation">(</span>page<span class="token punctuation">.</span><span class="token function">url</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toBe</span><span class="token punctuation">(</span><span class="token string">'http://localhost:3000/dashboard'</span><span class="token punctuation">)</span></span>
+<span class="line">    <span class="token function">expect</span><span class="token punctuation">(</span>page<span class="token punctuation">.</span><span class="token function">url</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toBe</span><span class="token punctuation">(</span><span class="token string">'http://localhost:3000/get-started'</span><span class="token punctuation">)</span></span>
 <span class="line">  <span class="token punctuation">}</span><span class="token punctuation">)</span></span>
 <span class="line"><span class="token punctuation">}</span><span class="token punctuation">)</span></span>
 <span class="line"></span></code></pre>
