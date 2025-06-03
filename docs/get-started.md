@@ -1,5 +1,4 @@
 ---
-requireAuth: true
 title: Get Started
 ---
 

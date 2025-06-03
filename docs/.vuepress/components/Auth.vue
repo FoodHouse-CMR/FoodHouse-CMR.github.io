@@ -1,5 +1,5 @@
 <template>
-  <div class="auth-nav">
+  <div class="auth-nav" v-if="authStore.initialized">
     <!-- Login Button when not authenticated -->
     <button 
       v-if="!isAuthenticated" 

@@ -2,7 +2,7 @@
 <template>
   <ParentLayout>
     <template #navbar-after>
-      <Auth/>
+        <Auth />
     </template>
   </ParentLayout>
 </template>
