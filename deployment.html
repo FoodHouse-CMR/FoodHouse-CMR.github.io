@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="generator" content="VuePress 2.0.0-rc.20" />
+    <style>
+      :root {
+        --vp-c-bg: #fff;
+      }
+
+      [data-theme='dark'] {
+        --vp-c-bg: #1b1b1f;
+      }
+
+      html,
+      body {
+        background-color: var(--vp-c-bg);
+      }
+    </style>
+    <script>
+      const useChoice = localStorage.getItem('vuepress-color-scheme')
+      const systemStatus =
+        'matchMedia' in window
+          ? window.matchMedia('(prefers-color-scheme: dark)').matches
+          : false
+
+      if (useChoice === 'light') {
+        document.documentElement.dataset.theme = 'light'
+      } else if (useChoice === 'dark' || systemStatus) {
+        document.documentElement.dataset.theme = 'dark'
+      }
+    </script>
+    <title>Deployment Guide | Food House</title><meta name="description" content="A specialized e-commerce platform connecting farmers and buyers">
+    <link rel="preload" href="/assets/style-Bg-rksv6.css" as="style"><link rel="stylesheet" href="/assets/style-Bg-rksv6.css">
+    <link rel="modulepreload" href="/assets/app-BQO2_VqH.js"><link rel="modulepreload" href="/assets/deployment.html-DXUYkRr1.js">
+    <link rel="prefetch" href="/assets/index.html-BaLXdRgN.js" as="script"><link rel="prefetch" href="/assets/api-documentation.html-Dbx154Zr.js" as="script"><link rel="prefetch" href="/assets/architecture.html-D8pI_rv0.js" as="script"><link rel="prefetch" href="/assets/configuration.html-D-TBvUMR.js" as="script"><link rel="prefetch" href="/assets/contributing.html-CXaKFYII.js" as="script"><link rel="prefetch" href="/assets/database-schema.html-BMZ9wVWL.js" as="script"><link rel="prefetch" href="/assets/development.html-D7Nwv-iw.js" as="script"><link rel="prefetch" href="/assets/get-started.html-BxcFPSzE.js" as="script"><link rel="prefetch" href="/assets/security.html-PwhXERjD.js" as="script"><link rel="prefetch" href="/assets/system-overview.html-5fHsd-5A.js" as="script"><link rel="prefetch" href="/assets/testing.html-Dx3WnJlU.js" as="script"><link rel="prefetch" href="/assets/troubleshooting.html-CO1LsLzI.js" as="script"><link rel="prefetch" href="/assets/404.html-DLvcAxT7.js" as="script">
+  </head>
+  <body>
+    <div id="app"><!--[--><div class="vp-theme-container external-link-icon" vp-container><!--[--><header class="vp-navbar" vp-navbar><div class="vp-toggle-sidebar-button" title="toggle sidebar" aria-expanded="false" role="button" tabindex="0"><div class="icon" aria-hidden="true"><span></span><span></span><span></span></div></div><span><a class="route-link" href="/"><img class="vp-site-logo" src="https://vuejs.press/images/hero.png" alt="Food House"><span class="vp-site-name vp-hide-mobile" aria-hidden="true">Food House</span></a></span><div class="vp-navbar-items-wrapper" style=""><!--[--><!--]--><nav class="vp-navbar-items vp-hide-mobile" aria-label="site navigation"><!--[--><div class="vp-navbar-item"><a class="route-link auto-link" href="/get-started.html" aria-label="Get Started"><!--[--><!--[--><!--]--><!--]-->Get Started<!--[--><!--[--><!--]--><!--]--></a></div><div class="vp-navbar-item"><div class="vp-navbar-dropdown-wrapper"><button class="vp-navbar-dropdown-title" type="button" aria-label="Explore"><span class="title">Explore</span><span class="arrow down"></span></button><button class="vp-navbar-dropdown-title-mobile" type="button" aria-label="Explore"><span class="title">Explore</span><span class="right arrow"></span></button><ul style="display:none;" class="vp-navbar-dropdown"><!--[--><li class="vp-navbar-dropdown-item"><!--[--><h4 class="vp-navbar-dropdown-subtitle"><span>Getting Started</span></h4><ul class="vp-navbar-dropdown-subitem-wrapper"><!--[--><li class="vp-navbar-dropdown-subitem"><a class="route-link auto-link" href="/system-overview.html" aria-label="System Overview"><!--[--><!--[--><!--]--><!--]-->System Overview<!--[--><!--[--><!--]--><!--]--></a></li><li class="vp-navbar-dropdown-subitem"><a class="route-link auto-link" href="/architecture.html" aria-label="Architecture"><!--[--><!--[--><!--]--><!--]-->Architecture<!--[--><!--[--><!--]--><!--]--></a></li><li class="vp-navbar-dropdown-subitem"><a class="route-link auto-link" href="/development.html" aria-label="Development"><!--[--><!--[--><!--]--><!--]-->Development<!--[--><!--[--><!--]--><!--]--></a></li><!--]--></ul><!--]--></li><li class="vp-navbar-dropdown-item"><!--[--><h4 class="vp-navbar-dropdown-subtitle"><span>Technical Documentation</span></h4><ul class="vp-navbar-dropdown-subitem-wrapper"><!--[--><li class="vp-navbar-dropdown-subitem"><a class="route-link auto-link" href="/api-documentation.html" aria-label="API Documentation"><!--[--><!--[--><!--]--><!--]-->API Documentation<!--[--><!--[--><!--]--><!--]--></a></li><li class="vp-navbar-dropdown-subitem"><a class="route-link auto-link" href="/database-schema.html" aria-label="Database Schema"><!--[--><!--[--><!--]--><!--]-->Database Schema<!--[--><!--[--><!--]--><!--]--></a></li><li class="vp-navbar-dropdown-subitem"><a class="route-link auto-link" href="/configuration.html" aria-label="Configuration"><!--[--><!--[--><!--]--><!--]-->Configuration<!--[--><!--[--><!--]--><!--]--></a></li><!--]--></ul><!--]--></li><li class="vp-navbar-dropdown-item"><!--[--><h4 class="vp-navbar-dropdown-subtitle"><span>Operations</span></h4><ul class="vp-navbar-dropdown-subitem-wrapper"><!--[--><li class="vp-navbar-dropdown-subitem"><a class="route-link route-link-active auto-link" href="/deployment.html" aria-label="Deployment"><!--[--><!--[--><!--]--><!--]-->Deployment<!--[--><!--[--><!--]--><!--]--></a></li><li class="vp-navbar-dropdown-subitem"><a class="route-link auto-link" href="/testing.html" aria-label="Testing"><!--[--><!--[--><!--]--><!--]-->Testing<!--[--><!--[--><!--]--><!--]--></a></li><li class="vp-navbar-dropdown-subitem"><a class="route-link auto-link" href="/security.html" aria-label="Security"><!--[--><!--[--><!--]--><!--]-->Security<!--[--><!--[--><!--]--><!--]--></a></li><li class="vp-navbar-dropdown-subitem"><a class="route-link auto-link" href="/troubleshooting.html" aria-label="Troubleshooting"><!--[--><!--[--><!--]--><!--]-->Troubleshooting<!--[--><!--[--><!--]--><!--]--></a></li><!--]--></ul><!--]--></li><li class="vp-navbar-dropdown-item"><!--[--><h4 class="vp-navbar-dropdown-subtitle"><span>Contributing</span></h4><ul class="vp-navbar-dropdown-subitem-wrapper"><!--[--><li class="vp-navbar-dropdown-subitem"><a class="route-link auto-link" href="/contributing.html" aria-label="Contributing Guide"><!--[--><!--[--><!--]--><!--]-->Contributing Guide<!--[--><!--[--><!--]--><!--]--></a></li><!--]--></ul><!--]--></li><!--]--></ul></div></div><!--]--></nav><!--[--><!--[--><div class="auth-nav" data-v-5696ee04><button class="vp-button vp-button--primary" data-v-5696ee04> Login </button></div><!--]--><!--]--><button type="button" class="vp-toggle-color-mode-button" title="toggle color mode"><svg class="light-icon" viewbox="0 0 32 32" style=""><path d="M16 12.005a4 4 0 1 1-4 4a4.005 4.005 0 0 1 4-4m0-2a6 6 0 1 0 6 6a6 6 0 0 0-6-6z" fill="currentColor"></path><path d="M5.394 6.813l1.414-1.415l3.506 3.506L8.9 10.318z" fill="currentColor"></path><path d="M2 15.005h5v2H2z" fill="currentColor"></path><path d="M5.394 25.197L8.9 21.691l1.414 1.415l-3.506 3.505z" fill="currentColor"></path><path d="M15 25.005h2v5h-2z" fill="currentColor"></path><path d="M21.687 23.106l1.414-1.415l3.506 3.506l-1.414 1.414z" fill="currentColor"></path><path d="M25 15.005h5v2h-5z" fill="currentColor"></path><path d="M21.687 8.904l3.506-3.506l1.414 1.415l-3.506 3.505z" fill="currentColor"></path><path d="M15 2.005h2v5h-2z" fill="currentColor"></path></svg><svg class="dark-icon" viewbox="0 0 32 32" style="display:none;"><path d="M13.502 5.414a15.075 15.075 0 0 0 11.594 18.194a11.113 11.113 0 0 1-7.975 3.39c-.138 0-.278.005-.418 0a11.094 11.094 0 0 1-3.2-21.584M14.98 3a1.002 1.002 0 0 0-.175.016a13.096 13.096 0 0 0 1.825 25.981c.164.006.328 0 .49 0a13.072 13.072 0 0 0 10.703-5.555a1.01 1.01 0 0 0-.783-1.565A13.08 13.08 0 0 1 15.89 4.38A1.015 1.015 0 0 0 14.98 3z" fill="currentColor"></path></svg></button><!----></div></header><!--]--><div class="vp-sidebar-mask"></div><!--[--><aside class="vp-sidebar" vp-sidebar><nav class="vp-navbar-items" aria-label="site navigation"><!--[--><div class="vp-navbar-item"><a class="route-link auto-link" href="/get-started.html" aria-label="Get Started"><!--[--><!--[--><!--]--><!--]-->Get Started<!--[--><!--[--><!--]--><!--]--></a></div><div class="vp-navbar-item"><div class="vp-navbar-dropdown-wrapper"><button class="vp-navbar-dropdown-title" type="button" aria-label="Explore"><span class="title">Explore</span><span class="arrow down"></span></button><button class="vp-navbar-dropdown-title-mobile" type="button" aria-label="Explore"><span class="title">Explore</span><span class="right arrow"></span></button><ul style="display:none;" class="vp-navbar-dropdown"><!--[--><li class="vp-navbar-dropdown-item"><!--[--><h4 class="vp-navbar-dropdown-subtitle"><span>Getting Started</span></h4><ul class="vp-navbar-dropdown-subitem-wrapper"><!--[--><li class="vp-navbar-dropdown-subitem"><a class="route-link auto-link" href="/system-overview.html" aria-label="System Overview"><!--[--><!--[--><!--]--><!--]-->System Overview<!--[--><!--[--><!--]--><!--]--></a></li><li class="vp-navbar-dropdown-subitem"><a class="route-link auto-link" href="/architecture.html" aria-label="Architecture"><!--[--><!--[--><!--]--><!--]-->Architecture<!--[--><!--[--><!--]--><!--]--></a></li><li class="vp-navbar-dropdown-subitem"><a class="route-link auto-link" href="/development.html" aria-label="Development"><!--[--><!--[--><!--]--><!--]-->Development<!--[--><!--[--><!--]--><!--]--></a></li><!--]--></ul><!--]--></li><li class="vp-navbar-dropdown-item"><!--[--><h4 class="vp-navbar-dropdown-subtitle"><span>Technical Documentation</span></h4><ul class="vp-navbar-dropdown-subitem-wrapper"><!--[--><li class="vp-navbar-dropdown-subitem"><a class="route-link auto-link" href="/api-documentation.html" aria-label="API Documentation"><!--[--><!--[--><!--]--><!--]-->API Documentation<!--[--><!--[--><!--]--><!--]--></a></li><li class="vp-navbar-dropdown-subitem"><a class="route-link auto-link" href="/database-schema.html" aria-label="Database Schema"><!--[--><!--[--><!--]--><!--]-->Database Schema<!--[--><!--[--><!--]--><!--]--></a></li><li class="vp-navbar-dropdown-subitem"><a class="route-link auto-link" href="/configuration.html" aria-label="Configuration"><!--[--><!--[--><!--]--><!--]-->Configuration<!--[--><!--[--><!--]--><!--]--></a></li><!--]--></ul><!--]--></li><li class="vp-navbar-dropdown-item"><!--[--><h4 class="vp-navbar-dropdown-subtitle"><span>Operations</span></h4><ul class="vp-navbar-dropdown-subitem-wrapper"><!--[--><li class="vp-navbar-dropdown-subitem"><a class="route-link route-link-active auto-link" href="/deployment.html" aria-label="Deployment"><!--[--><!--[--><!--]--><!--]-->Deployment<!--[--><!--[--><!--]--><!--]--></a></li><li class="vp-navbar-dropdown-subitem"><a class="route-link auto-link" href="/testing.html" aria-label="Testing"><!--[--><!--[--><!--]--><!--]-->Testing<!--[--><!--[--><!--]--><!--]--></a></li><li class="vp-navbar-dropdown-subitem"><a class="route-link auto-link" href="/security.html" aria-label="Security"><!--[--><!--[--><!--]--><!--]-->Security<!--[--><!--[--><!--]--><!--]--></a></li><li class="vp-navbar-dropdown-subitem"><a class="route-link auto-link" href="/troubleshooting.html" aria-label="Troubleshooting"><!--[--><!--[--><!--]--><!--]-->Troubleshooting<!--[--><!--[--><!--]--><!--]--></a></li><!--]--></ul><!--]--></li><li class="vp-navbar-dropdown-item"><!--[--><h4 class="vp-navbar-dropdown-subtitle"><span>Contributing</span></h4><ul class="vp-navbar-dropdown-subitem-wrapper"><!--[--><li class="vp-navbar-dropdown-subitem"><a class="route-link auto-link" href="/contributing.html" aria-label="Contributing Guide"><!--[--><!--[--><!--]--><!--]-->Contributing Guide<!--[--><!--[--><!--]--><!--]--></a></li><!--]--></ul><!--]--></li><!--]--></ul></div></div><!--]--></nav><!--[--><!--]--><ul class="vp-sidebar-items"><!--[--><li><p tabindex="0" class="vp-sidebar-item vp-sidebar-heading">Deployment Guide <!----></p><!----></li><!--]--></ul><!--[--><!--]--></aside><!--]--><!--[--><main class="vp-page"><!--[--><!--]--><div vp-content><!--[--><!--]--><div><h1 id="deployment-guide" tabindex="-1"><a class="header-anchor" href="#deployment-guide"><span>Deployment Guide</span></a></h1><h2 id="overview" tabindex="-1"><a class="header-anchor" href="#overview"><span>Overview</span></a></h2><p>This guide provides comprehensive instructions for deploying the FoodHouse application in various environments. The application is designed to be deployed as a set of microservices using Docker containers and orchestrated with Kubernetes.</p><h2 id="prerequisites" tabindex="-1"><a class="header-anchor" href="#prerequisites"><span>Prerequisites</span></a></h2><h3 id="required-tools" tabindex="-1"><a class="header-anchor" href="#required-tools"><span>Required Tools</span></a></h3><ul><li>Docker (v20.10+)</li><li>Docker Compose (v2.0+)</li><li>Kubernetes (v1.20+)</li><li>kubectl (v1.20+)</li><li>AWS CLI (v2.0+)</li><li>Terraform (v1.0+)</li><li>Helm (v3.0+)</li></ul><h3 id="required-accounts" tabindex="-1"><a class="header-anchor" href="#required-accounts"><span>Required Accounts</span></a></h3><ul><li>AWS Account</li><li>Docker Hub Account</li><li>GitHub Account</li></ul><h2 id="infrastructure-setup" tabindex="-1"><a class="header-anchor" href="#infrastructure-setup"><span>Infrastructure Setup</span></a></h2><h3 id="aws-infrastructure" tabindex="-1"><a class="header-anchor" href="#aws-infrastructure"><span>AWS Infrastructure</span></a></h3><img src="https://www.plantuml.com/plantuml/svg/RP71Yi9038RlynInTqzx5xKh8iWYEx8UbZt4QT31QQPCCueiVNTRIzsjzJ8atpyX7sHQ2WQ9kLCZEL9EK3YqhCgJvG83vc1yNdWc5YrNHn382FB1aLB6-PX1CjjfI9ioWLy5m3uZIBusQTjsO1FtpXhGSSyaNGJmlMAXK2DOej05hpzTy37R3jZQOmPpTCY6Gakh-_j_KR3dUcouQP4sdh6KRhHcd-_wKIySbc9JD4TwCFtsjwLIbL93NnYF9mEpfxxzqnFeTMr-btd1Us8lyaPoIfpLHxm1" alt=""><h3 id="terraform-configuration" tabindex="-1"><a class="header-anchor" href="#terraform-configuration"><span>Terraform Configuration</span></a></h3><div class="language-hcl line-numbers-mode" data-highlighter="prismjs" data-ext="hcl"><pre><code><span class="line"><span class="token comment"># main.tf</span></span>
+<span class="line"><span class="token keyword">provider<span class="token type variable"> &quot;aws&quot; </span></span><span class="token punctuation">{</span></span>
+<span class="line">  <span class="token property">region</span> <span class="token punctuation">=</span> var.aws_region</span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="token keyword">module<span class="token type variable"> &quot;vpc&quot; </span></span><span class="token punctuation">{</span></span>
+<span class="line">  <span class="token property">source</span> <span class="token punctuation">=</span> <span class="token string">&quot;./modules/vpc&quot;</span></span>
+<span class="line">  </span>
+<span class="line">  <span class="token property">vpc_cidr</span> <span class="token punctuation">=</span> var.vpc_cidr</span>
+<span class="line">  <span class="token property">environment</span> <span class="token punctuation">=</span> var.environment</span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="token keyword">module<span class="token type variable"> &quot;ecs&quot; </span></span><span class="token punctuation">{</span></span>
+<span class="line">  <span class="token property">source</span> <span class="token punctuation">=</span> <span class="token string">&quot;./modules/ecs&quot;</span></span>
+<span class="line">  </span>
+<span class="line">  <span class="token property">vpc_id</span> <span class="token punctuation">=</span> module.vpc.vpc_id</span>
+<span class="line">  <span class="token property">environment</span> <span class="token punctuation">=</span> var.environment</span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="token keyword">module<span class="token type variable"> &quot;rds&quot; </span></span><span class="token punctuation">{</span></span>
+<span class="line">  <span class="token property">source</span> <span class="token punctuation">=</span> <span class="token string">&quot;./modules/rds&quot;</span></span>
+<span class="line">  </span>
+<span class="line">  <span class="token property">vpc_id</span> <span class="token punctuation">=</span> module.vpc.vpc_id</span>
+<span class="line">  <span class="token property">environment</span> <span class="token punctuation">=</span> var.environment</span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="token keyword">module<span class="token type variable"> &quot;elasticache&quot; </span></span><span class="token punctuation">{</span></span>
+<span class="line">  <span class="token property">source</span> <span class="token punctuation">=</span> <span class="token string">&quot;./modules/elasticache&quot;</span></span>
+<span class="line">  </span>
+<span class="line">  <span class="token property">vpc_id</span> <span class="token punctuation">=</span> module.vpc.vpc_id</span>
+<span class="line">  <span class="token property">environment</span> <span class="token punctuation">=</span> var.environment</span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="container-configuration" tabindex="-1"><a class="header-anchor" href="#container-configuration"><span>Container Configuration</span></a></h2><h3 id="docker-compose" tabindex="-1"><a class="header-anchor" href="#docker-compose"><span>Docker Compose</span></a></h3><div class="language-yaml line-numbers-mode" data-highlighter="prismjs" data-ext="yml"><pre><code><span class="line"><span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token string">&#39;3.8&#39;</span></span>
+<span class="line"></span>
+<span class="line"><span class="token key atrule">services</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token key atrule">users</span><span class="token punctuation">:</span></span>
+<span class="line">    <span class="token key atrule">build</span><span class="token punctuation">:</span> ./users</span>
+<span class="line">    <span class="token key atrule">ports</span><span class="token punctuation">:</span></span>
+<span class="line">      <span class="token punctuation">-</span> <span class="token string">&quot;8080:8080&quot;</span></span>
+<span class="line">    <span class="token key atrule">environment</span><span class="token punctuation">:</span></span>
+<span class="line">      <span class="token punctuation">-</span> DB_HOST=postgres</span>
+<span class="line">      <span class="token punctuation">-</span> DB_PORT=5432</span>
+<span class="line">      <span class="token punctuation">-</span> DB_NAME=foodhouse_users</span>
+<span class="line">      <span class="token punctuation">-</span> DB_USER=postgres</span>
+<span class="line">      <span class="token punctuation">-</span> DB_PASSWORD=secret</span>
+<span class="line">    <span class="token key atrule">depends_on</span><span class="token punctuation">:</span></span>
+<span class="line">      <span class="token punctuation">-</span> postgres</span>
+<span class="line"></span>
+<span class="line">  <span class="token key atrule">products</span><span class="token punctuation">:</span></span>
+<span class="line">    <span class="token key atrule">build</span><span class="token punctuation">:</span> ./products</span>
+<span class="line">    <span class="token key atrule">ports</span><span class="token punctuation">:</span></span>
+<span class="line">      <span class="token punctuation">-</span> <span class="token string">&quot;8081:8080&quot;</span></span>
+<span class="line">    <span class="token key atrule">environment</span><span class="token punctuation">:</span></span>
+<span class="line">      <span class="token punctuation">-</span> DB_HOST=postgres</span>
+<span class="line">      <span class="token punctuation">-</span> DB_PORT=5432</span>
+<span class="line">      <span class="token punctuation">-</span> DB_NAME=foodhouse_products</span>
+<span class="line">      <span class="token punctuation">-</span> DB_USER=postgres</span>
+<span class="line">      <span class="token punctuation">-</span> DB_PASSWORD=secret</span>
+<span class="line">    <span class="token key atrule">depends_on</span><span class="token punctuation">:</span></span>
+<span class="line">      <span class="token punctuation">-</span> postgres</span>
+<span class="line"></span>
+<span class="line">  <span class="token key atrule">orders</span><span class="token punctuation">:</span></span>
+<span class="line">    <span class="token key atrule">build</span><span class="token punctuation">:</span> ./orders</span>
+<span class="line">    <span class="token key atrule">ports</span><span class="token punctuation">:</span></span>
+<span class="line">      <span class="token punctuation">-</span> <span class="token string">&quot;8082:8080&quot;</span></span>
+<span class="line">    <span class="token key atrule">environment</span><span class="token punctuation">:</span></span>
+<span class="line">      <span class="token punctuation">-</span> DB_HOST=postgres</span>
+<span class="line">      <span class="token punctuation">-</span> DB_PORT=5432</span>
+<span class="line">      <span class="token punctuation">-</span> DB_NAME=foodhouse_orders</span>
+<span class="line">      <span class="token punctuation">-</span> DB_USER=postgres</span>
+<span class="line">      <span class="token punctuation">-</span> DB_PASSWORD=secret</span>
+<span class="line">    <span class="token key atrule">depends_on</span><span class="token punctuation">:</span></span>
+<span class="line">      <span class="token punctuation">-</span> postgres</span>
+<span class="line"></span>
+<span class="line">  <span class="token key atrule">payments</span><span class="token punctuation">:</span></span>
+<span class="line">    <span class="token key atrule">build</span><span class="token punctuation">:</span> ./payments</span>
+<span class="line">    <span class="token key atrule">ports</span><span class="token punctuation">:</span></span>
+<span class="line">      <span class="token punctuation">-</span> <span class="token string">&quot;8083:8080&quot;</span></span>
+<span class="line">    <span class="token key atrule">environment</span><span class="token punctuation">:</span></span>
+<span class="line">      <span class="token punctuation">-</span> DB_HOST=postgres</span>
+<span class="line">      <span class="token punctuation">-</span> DB_PORT=5432</span>
+<span class="line">      <span class="token punctuation">-</span> DB_NAME=foodhouse_payments</span>
+<span class="line">      <span class="token punctuation">-</span> DB_USER=postgres</span>
+<span class="line">      <span class="token punctuation">-</span> DB_PASSWORD=secret</span>
+<span class="line">    <span class="token key atrule">depends_on</span><span class="token punctuation">:</span></span>
+<span class="line">      <span class="token punctuation">-</span> postgres</span>
+<span class="line"></span>
+<span class="line">  <span class="token key atrule">postgres</span><span class="token punctuation">:</span></span>
+<span class="line">    <span class="token key atrule">image</span><span class="token punctuation">:</span> postgres<span class="token punctuation">:</span><span class="token number">13</span></span>
+<span class="line">    <span class="token key atrule">environment</span><span class="token punctuation">:</span></span>
+<span class="line">      <span class="token punctuation">-</span> POSTGRES_USER=postgres</span>
+<span class="line">      <span class="token punctuation">-</span> POSTGRES_PASSWORD=secret</span>
+<span class="line">    <span class="token key atrule">volumes</span><span class="token punctuation">:</span></span>
+<span class="line">      <span class="token punctuation">-</span> postgres_data<span class="token punctuation">:</span>/var/lib/postgresql/data</span>
+<span class="line"></span>
+<span class="line"><span class="token key atrule">volumes</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token key atrule">postgres_data</span><span class="token punctuation">:</span></span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="kubernetes-manifests" tabindex="-1"><a class="header-anchor" href="#kubernetes-manifests"><span>Kubernetes Manifests</span></a></h3><div class="language-yaml line-numbers-mode" data-highlighter="prismjs" data-ext="yml"><pre><code><span class="line"><span class="token comment"># users-deployment.yaml</span></span>
+<span class="line"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apps/v1</span>
+<span class="line"><span class="token key atrule">kind</span><span class="token punctuation">:</span> Deployment</span>
+<span class="line"><span class="token key atrule">metadata</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token key atrule">name</span><span class="token punctuation">:</span> users</span>
+<span class="line">  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> foodhouse</span>
+<span class="line"><span class="token key atrule">spec</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token key atrule">replicas</span><span class="token punctuation">:</span> <span class="token number">3</span></span>
+<span class="line">  <span class="token key atrule">selector</span><span class="token punctuation">:</span></span>
+<span class="line">    <span class="token key atrule">matchLabels</span><span class="token punctuation">:</span></span>
+<span class="line">      <span class="token key atrule">app</span><span class="token punctuation">:</span> users</span>
+<span class="line">  <span class="token key atrule">template</span><span class="token punctuation">:</span></span>
+<span class="line">    <span class="token key atrule">metadata</span><span class="token punctuation">:</span></span>
+<span class="line">      <span class="token key atrule">labels</span><span class="token punctuation">:</span></span>
+<span class="line">        <span class="token key atrule">app</span><span class="token punctuation">:</span> users</span>
+<span class="line">    <span class="token key atrule">spec</span><span class="token punctuation">:</span></span>
+<span class="line">      <span class="token key atrule">containers</span><span class="token punctuation">:</span></span>
+<span class="line">      <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> users</span>
+<span class="line">        <span class="token key atrule">image</span><span class="token punctuation">:</span> foodhouse/users<span class="token punctuation">:</span>latest</span>
+<span class="line">        <span class="token key atrule">ports</span><span class="token punctuation">:</span></span>
+<span class="line">        <span class="token punctuation">-</span> <span class="token key atrule">containerPort</span><span class="token punctuation">:</span> <span class="token number">8080</span></span>
+<span class="line">        <span class="token key atrule">env</span><span class="token punctuation">:</span></span>
+<span class="line">        <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> DB_HOST</span>
+<span class="line">          <span class="token key atrule">valueFrom</span><span class="token punctuation">:</span></span>
+<span class="line">            <span class="token key atrule">secretKeyRef</span><span class="token punctuation">:</span></span>
+<span class="line">              <span class="token key atrule">name</span><span class="token punctuation">:</span> db<span class="token punctuation">-</span>secrets</span>
+<span class="line">              <span class="token key atrule">key</span><span class="token punctuation">:</span> host</span>
+<span class="line">        <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> DB_PASSWORD</span>
+<span class="line">          <span class="token key atrule">valueFrom</span><span class="token punctuation">:</span></span>
+<span class="line">            <span class="token key atrule">secretKeyRef</span><span class="token punctuation">:</span></span>
+<span class="line">              <span class="token key atrule">name</span><span class="token punctuation">:</span> db<span class="token punctuation">-</span>secrets</span>
+<span class="line">              <span class="token key atrule">key</span><span class="token punctuation">:</span> password</span>
+<span class="line">        <span class="token key atrule">resources</span><span class="token punctuation">:</span></span>
+<span class="line">          <span class="token key atrule">requests</span><span class="token punctuation">:</span></span>
+<span class="line">            <span class="token key atrule">memory</span><span class="token punctuation">:</span> <span class="token string">&quot;256Mi&quot;</span></span>
+<span class="line">            <span class="token key atrule">cpu</span><span class="token punctuation">:</span> <span class="token string">&quot;200m&quot;</span></span>
+<span class="line">          <span class="token key atrule">limits</span><span class="token punctuation">:</span></span>
+<span class="line">            <span class="token key atrule">memory</span><span class="token punctuation">:</span> <span class="token string">&quot;512Mi&quot;</span></span>
+<span class="line">            <span class="token key atrule">cpu</span><span class="token punctuation">:</span> <span class="token string">&quot;500m&quot;</span></span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="deployment-process" tabindex="-1"><a class="header-anchor" href="#deployment-process"><span>Deployment Process</span></a></h2><h3 id="_1-build-and-push-docker-images" tabindex="-1"><a class="header-anchor" href="#_1-build-and-push-docker-images"><span>1. Build and Push Docker Images</span></a></h3><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre><code><span class="line"><span class="token comment"># Build images</span></span>
+<span class="line"><span class="token function">docker</span> build <span class="token parameter variable">-t</span> foodhouse/users:latest ./users</span>
+<span class="line"><span class="token function">docker</span> build <span class="token parameter variable">-t</span> foodhouse/products:latest ./products</span>
+<span class="line"><span class="token function">docker</span> build <span class="token parameter variable">-t</span> foodhouse/orders:latest ./orders</span>
+<span class="line"><span class="token function">docker</span> build <span class="token parameter variable">-t</span> foodhouse/payments:latest ./payments</span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># Push to registry</span></span>
+<span class="line"><span class="token function">docker</span> push foodhouse/users:latest</span>
+<span class="line"><span class="token function">docker</span> push foodhouse/products:latest</span>
+<span class="line"><span class="token function">docker</span> push foodhouse/orders:latest</span>
+<span class="line"><span class="token function">docker</span> push foodhouse/payments:latest</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_2-deploy-infrastructure" tabindex="-1"><a class="header-anchor" href="#_2-deploy-infrastructure"><span>2. Deploy Infrastructure</span></a></h3><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre><code><span class="line"><span class="token comment"># Initialize Terraform</span></span>
+<span class="line">terraform init</span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># Plan deployment</span></span>
+<span class="line">terraform plan <span class="token parameter variable">-out</span><span class="token operator">=</span>tfplan</span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># Apply changes</span></span>
+<span class="line">terraform apply tfplan</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_3-deploy-kubernetes-resources" tabindex="-1"><a class="header-anchor" href="#_3-deploy-kubernetes-resources"><span>3. Deploy Kubernetes Resources</span></a></h3><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre><code><span class="line"><span class="token comment"># Create namespace</span></span>
+<span class="line">kubectl create namespace foodhouse</span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># Apply secrets</span></span>
+<span class="line">kubectl apply <span class="token parameter variable">-f</span> k8s/secrets.yaml</span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># Deploy services</span></span>
+<span class="line">kubectl apply <span class="token parameter variable">-f</span> k8s/users-deployment.yaml</span>
+<span class="line">kubectl apply <span class="token parameter variable">-f</span> k8s/products-deployment.yaml</span>
+<span class="line">kubectl apply <span class="token parameter variable">-f</span> k8s/orders-deployment.yaml</span>
+<span class="line">kubectl apply <span class="token parameter variable">-f</span> k8s/payments-deployment.yaml</span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># Deploy ingress</span></span>
+<span class="line">kubectl apply <span class="token parameter variable">-f</span> k8s/ingress.yaml</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="environment-configuration" tabindex="-1"><a class="header-anchor" href="#environment-configuration"><span>Environment Configuration</span></a></h2><h3 id="development" tabindex="-1"><a class="header-anchor" href="#development"><span>Development</span></a></h3><div class="language-yaml line-numbers-mode" data-highlighter="prismjs" data-ext="yml"><pre><code><span class="line"><span class="token comment"># config/development.yaml</span></span>
+<span class="line"><span class="token key atrule">environment</span><span class="token punctuation">:</span> development</span>
+<span class="line"><span class="token key atrule">log_level</span><span class="token punctuation">:</span> debug</span>
+<span class="line"><span class="token key atrule">database</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token key atrule">host</span><span class="token punctuation">:</span> localhost</span>
+<span class="line">  <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">5432</span></span>
+<span class="line">  <span class="token key atrule">name</span><span class="token punctuation">:</span> foodhouse_dev</span>
+<span class="line">  <span class="token key atrule">user</span><span class="token punctuation">:</span> postgres</span>
+<span class="line">  <span class="token key atrule">password</span><span class="token punctuation">:</span> secret</span>
+<span class="line"><span class="token key atrule">redis</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token key atrule">host</span><span class="token punctuation">:</span> localhost</span>
+<span class="line">  <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">6379</span></span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="staging" tabindex="-1"><a class="header-anchor" href="#staging"><span>Staging</span></a></h3><div class="language-yaml line-numbers-mode" data-highlighter="prismjs" data-ext="yml"><pre><code><span class="line"><span class="token comment"># config/staging.yaml</span></span>
+<span class="line"><span class="token key atrule">environment</span><span class="token punctuation">:</span> staging</span>
+<span class="line"><span class="token key atrule">log_level</span><span class="token punctuation">:</span> info</span>
+<span class="line"><span class="token key atrule">database</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token key atrule">host</span><span class="token punctuation">:</span> staging<span class="token punctuation">-</span>db.foodhouse.com</span>
+<span class="line">  <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">5432</span></span>
+<span class="line">  <span class="token key atrule">name</span><span class="token punctuation">:</span> foodhouse_staging</span>
+<span class="line">  <span class="token key atrule">user</span><span class="token punctuation">:</span> $<span class="token punctuation">{</span>DB_USER<span class="token punctuation">}</span></span>
+<span class="line">  <span class="token key atrule">password</span><span class="token punctuation">:</span> $<span class="token punctuation">{</span>DB_PASSWORD<span class="token punctuation">}</span></span>
+<span class="line"><span class="token key atrule">redis</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token key atrule">host</span><span class="token punctuation">:</span> staging<span class="token punctuation">-</span>redis.foodhouse.com</span>
+<span class="line">  <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">6379</span></span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="production" tabindex="-1"><a class="header-anchor" href="#production"><span>Production</span></a></h3><div class="language-yaml line-numbers-mode" data-highlighter="prismjs" data-ext="yml"><pre><code><span class="line"><span class="token comment"># config/production.yaml</span></span>
+<span class="line"><span class="token key atrule">environment</span><span class="token punctuation">:</span> production</span>
+<span class="line"><span class="token key atrule">log_level</span><span class="token punctuation">:</span> warn</span>
+<span class="line"><span class="token key atrule">database</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token key atrule">host</span><span class="token punctuation">:</span> production<span class="token punctuation">-</span>db.foodhouse.com</span>
+<span class="line">  <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">5432</span></span>
+<span class="line">  <span class="token key atrule">name</span><span class="token punctuation">:</span> foodhouse_prod</span>
+<span class="line">  <span class="token key atrule">user</span><span class="token punctuation">:</span> $<span class="token punctuation">{</span>DB_USER<span class="token punctuation">}</span></span>
+<span class="line">  <span class="token key atrule">password</span><span class="token punctuation">:</span> $<span class="token punctuation">{</span>DB_PASSWORD<span class="token punctuation">}</span></span>
+<span class="line"><span class="token key atrule">redis</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token key atrule">host</span><span class="token punctuation">:</span> production<span class="token punctuation">-</span>redis.foodhouse.com</span>
+<span class="line">  <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">6379</span></span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="monitoring-setup" tabindex="-1"><a class="header-anchor" href="#monitoring-setup"><span>Monitoring Setup</span></a></h2><h3 id="prometheus-configuration" tabindex="-1"><a class="header-anchor" href="#prometheus-configuration"><span>Prometheus Configuration</span></a></h3><div class="language-yaml line-numbers-mode" data-highlighter="prismjs" data-ext="yml"><pre><code><span class="line"><span class="token comment"># prometheus.yml</span></span>
+<span class="line"><span class="token key atrule">global</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token key atrule">scrape_interval</span><span class="token punctuation">:</span> 15s</span>
+<span class="line">  <span class="token key atrule">evaluation_interval</span><span class="token punctuation">:</span> 15s</span>
+<span class="line"></span>
+<span class="line"><span class="token key atrule">scrape_configs</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token punctuation">-</span> <span class="token key atrule">job_name</span><span class="token punctuation">:</span> <span class="token string">&#39;users&#39;</span></span>
+<span class="line">    <span class="token key atrule">static_configs</span><span class="token punctuation">:</span></span>
+<span class="line">      <span class="token punctuation">-</span> <span class="token key atrule">targets</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&#39;users:8080&#39;</span><span class="token punctuation">]</span></span>
+<span class="line">  <span class="token punctuation">-</span> <span class="token key atrule">job_name</span><span class="token punctuation">:</span> <span class="token string">&#39;products&#39;</span></span>
+<span class="line">    <span class="token key atrule">static_configs</span><span class="token punctuation">:</span></span>
+<span class="line">      <span class="token punctuation">-</span> <span class="token key atrule">targets</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&#39;products:8080&#39;</span><span class="token punctuation">]</span></span>
+<span class="line">  <span class="token punctuation">-</span> <span class="token key atrule">job_name</span><span class="token punctuation">:</span> <span class="token string">&#39;orders&#39;</span></span>
+<span class="line">    <span class="token key atrule">static_configs</span><span class="token punctuation">:</span></span>
+<span class="line">      <span class="token punctuation">-</span> <span class="token key atrule">targets</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&#39;orders:8080&#39;</span><span class="token punctuation">]</span></span>
+<span class="line">  <span class="token punctuation">-</span> <span class="token key atrule">job_name</span><span class="token punctuation">:</span> <span class="token string">&#39;payments&#39;</span></span>
+<span class="line">    <span class="token key atrule">static_configs</span><span class="token punctuation">:</span></span>
+<span class="line">      <span class="token punctuation">-</span> <span class="token key atrule">targets</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&#39;payments:8080&#39;</span><span class="token punctuation">]</span></span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="grafana-dashboards" tabindex="-1"><a class="header-anchor" href="#grafana-dashboards"><span>Grafana Dashboards</span></a></h3><div class="language-json line-numbers-mode" data-highlighter="prismjs" data-ext="json"><pre><code><span class="line"><span class="token punctuation">{</span></span>
+<span class="line">  <span class="token property">&quot;dashboard&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span></span>
+<span class="line">    <span class="token property">&quot;id&quot;</span><span class="token operator">:</span> <span class="token null keyword">null</span><span class="token punctuation">,</span></span>
+<span class="line">    <span class="token property">&quot;title&quot;</span><span class="token operator">:</span> <span class="token string">&quot;FoodHouse Services&quot;</span><span class="token punctuation">,</span></span>
+<span class="line">    <span class="token property">&quot;panels&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span></span>
+<span class="line">      <span class="token punctuation">{</span></span>
+<span class="line">        <span class="token property">&quot;title&quot;</span><span class="token operator">:</span> <span class="token string">&quot;Service Health&quot;</span><span class="token punctuation">,</span></span>
+<span class="line">        <span class="token property">&quot;type&quot;</span><span class="token operator">:</span> <span class="token string">&quot;graph&quot;</span><span class="token punctuation">,</span></span>
+<span class="line">        <span class="token property">&quot;datasource&quot;</span><span class="token operator">:</span> <span class="token string">&quot;Prometheus&quot;</span><span class="token punctuation">,</span></span>
+<span class="line">        <span class="token property">&quot;targets&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span></span>
+<span class="line">          <span class="token punctuation">{</span></span>
+<span class="line">            <span class="token property">&quot;expr&quot;</span><span class="token operator">:</span> <span class="token string">&quot;up&quot;</span><span class="token punctuation">,</span></span>
+<span class="line">            <span class="token property">&quot;legendFormat&quot;</span><span class="token operator">:</span> <span class="token string">&quot;{{service}}&quot;</span></span>
+<span class="line">          <span class="token punctuation">}</span></span>
+<span class="line">        <span class="token punctuation">]</span></span>
+<span class="line">      <span class="token punctuation">}</span><span class="token punctuation">,</span></span>
+<span class="line">      <span class="token punctuation">{</span></span>
+<span class="line">        <span class="token property">&quot;title&quot;</span><span class="token operator">:</span> <span class="token string">&quot;Request Rate&quot;</span><span class="token punctuation">,</span></span>
+<span class="line">        <span class="token property">&quot;type&quot;</span><span class="token operator">:</span> <span class="token string">&quot;graph&quot;</span><span class="token punctuation">,</span></span>
+<span class="line">        <span class="token property">&quot;datasource&quot;</span><span class="token operator">:</span> <span class="token string">&quot;Prometheus&quot;</span><span class="token punctuation">,</span></span>
+<span class="line">        <span class="token property">&quot;targets&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span></span>
+<span class="line">          <span class="token punctuation">{</span></span>
+<span class="line">            <span class="token property">&quot;expr&quot;</span><span class="token operator">:</span> <span class="token string">&quot;rate(http_requests_total[5m])&quot;</span><span class="token punctuation">,</span></span>
+<span class="line">            <span class="token property">&quot;legendFormat&quot;</span><span class="token operator">:</span> <span class="token string">&quot;{{service}}&quot;</span></span>
+<span class="line">          <span class="token punctuation">}</span></span>
+<span class="line">        <span class="token punctuation">]</span></span>
+<span class="line">      <span class="token punctuation">}</span></span>
+<span class="line">    <span class="token punctuation">]</span></span>
+<span class="line">  <span class="token punctuation">}</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="security-configuration" tabindex="-1"><a class="header-anchor" href="#security-configuration"><span>Security Configuration</span></a></h2><h3 id="ssl-tls-setup" tabindex="-1"><a class="header-anchor" href="#ssl-tls-setup"><span>SSL/TLS Setup</span></a></h3><div class="language-yaml line-numbers-mode" data-highlighter="prismjs" data-ext="yml"><pre><code><span class="line"><span class="token comment"># cert-manager.yaml</span></span>
+<span class="line"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> cert<span class="token punctuation">-</span>manager.io/v1</span>
+<span class="line"><span class="token key atrule">kind</span><span class="token punctuation">:</span> Certificate</span>
+<span class="line"><span class="token key atrule">metadata</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token key atrule">name</span><span class="token punctuation">:</span> foodhouse<span class="token punctuation">-</span>cert</span>
+<span class="line">  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> foodhouse</span>
+<span class="line"><span class="token key atrule">spec</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token key atrule">secretName</span><span class="token punctuation">:</span> foodhouse<span class="token punctuation">-</span>tls</span>
+<span class="line">  <span class="token key atrule">issuerRef</span><span class="token punctuation">:</span></span>
+<span class="line">    <span class="token key atrule">name</span><span class="token punctuation">:</span> letsencrypt<span class="token punctuation">-</span>prod</span>
+<span class="line">    <span class="token key atrule">kind</span><span class="token punctuation">:</span> ClusterIssuer</span>
+<span class="line">  <span class="token key atrule">dnsNames</span><span class="token punctuation">:</span></span>
+<span class="line">    <span class="token punctuation">-</span> api.foodhouse.com</span>
+<span class="line">    <span class="token punctuation">-</span> www.foodhouse.com</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="network-policies" tabindex="-1"><a class="header-anchor" href="#network-policies"><span>Network Policies</span></a></h3><div class="language-yaml line-numbers-mode" data-highlighter="prismjs" data-ext="yml"><pre><code><span class="line"><span class="token comment"># network-policy.yaml</span></span>
+<span class="line"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> networking.k8s.io/v1</span>
+<span class="line"><span class="token key atrule">kind</span><span class="token punctuation">:</span> NetworkPolicy</span>
+<span class="line"><span class="token key atrule">metadata</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token key atrule">name</span><span class="token punctuation">:</span> foodhouse<span class="token punctuation">-</span>network<span class="token punctuation">-</span>policy</span>
+<span class="line">  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> foodhouse</span>
+<span class="line"><span class="token key atrule">spec</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token key atrule">podSelector</span><span class="token punctuation">:</span></span>
+<span class="line">    <span class="token key atrule">matchLabels</span><span class="token punctuation">:</span></span>
+<span class="line">      <span class="token key atrule">app</span><span class="token punctuation">:</span> foodhouse</span>
+<span class="line">  <span class="token key atrule">policyTypes</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token punctuation">-</span> Ingress</span>
+<span class="line">  <span class="token punctuation">-</span> Egress</span>
+<span class="line">  <span class="token key atrule">ingress</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token punctuation">-</span> <span class="token key atrule">from</span><span class="token punctuation">:</span></span>
+<span class="line">    <span class="token punctuation">-</span> <span class="token key atrule">namespaceSelector</span><span class="token punctuation">:</span></span>
+<span class="line">        <span class="token key atrule">matchLabels</span><span class="token punctuation">:</span></span>
+<span class="line">          <span class="token key atrule">name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx</span>
+<span class="line">    <span class="token key atrule">ports</span><span class="token punctuation">:</span></span>
+<span class="line">    <span class="token punctuation">-</span> <span class="token key atrule">protocol</span><span class="token punctuation">:</span> TCP</span>
+<span class="line">      <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">8080</span></span>
+<span class="line">  <span class="token key atrule">egress</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token punctuation">-</span> <span class="token key atrule">to</span><span class="token punctuation">:</span></span>
+<span class="line">    <span class="token punctuation">-</span> <span class="token key atrule">namespaceSelector</span><span class="token punctuation">:</span></span>
+<span class="line">        <span class="token key atrule">matchLabels</span><span class="token punctuation">:</span></span>
+<span class="line">          <span class="token key atrule">name</span><span class="token punctuation">:</span> kube<span class="token punctuation">-</span>system</span>
+<span class="line">    <span class="token key atrule">ports</span><span class="token punctuation">:</span></span>
+<span class="line">    <span class="token punctuation">-</span> <span class="token key atrule">protocol</span><span class="token punctuation">:</span> TCP</span>
+<span class="line">      <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">53</span></span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="backup-and-recovery" tabindex="-1"><a class="header-anchor" href="#backup-and-recovery"><span>Backup and Recovery</span></a></h2><h3 id="database-backup" tabindex="-1"><a class="header-anchor" href="#database-backup"><span>Database Backup</span></a></h3><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre><code><span class="line"><span class="token shebang important">#!/bin/bash</span></span>
+<span class="line"><span class="token comment"># backup.sh</span></span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># Set variables</span></span>
+<span class="line"><span class="token assign-left variable">BACKUP_DIR</span><span class="token operator">=</span><span class="token string">&quot;/backups&quot;</span></span>
+<span class="line"><span class="token assign-left variable">DATE</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token function">date</span> +%Y%m%d_%H%M%S<span class="token variable">)</span></span></span>
+<span class="line"><span class="token assign-left variable">DB_NAME</span><span class="token operator">=</span><span class="token string">&quot;foodhouse&quot;</span></span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># Create backup</span></span>
+<span class="line">pg_dump <span class="token parameter variable">-h</span> <span class="token variable">$DB_HOST</span> <span class="token parameter variable">-U</span> <span class="token variable">$DB_USER</span> <span class="token parameter variable">-d</span> <span class="token variable">$DB_NAME</span> <span class="token operator">&gt;</span> <span class="token variable">$BACKUP_DIR</span>/<span class="token variable">$DB_NAME_</span><span class="token variable">$DATE</span>.sql</span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># Compress backup</span></span>
+<span class="line"><span class="token function">gzip</span> <span class="token variable">$BACKUP_DIR</span>/<span class="token variable">$DB_NAME_</span><span class="token variable">$DATE</span>.sql</span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># Upload to S3</span></span>
+<span class="line">aws s3 <span class="token function">cp</span> <span class="token variable">$BACKUP_DIR</span>/<span class="token variable">$DB_NAME_</span><span class="token variable">$DATE</span>.sql.gz s3://foodhouse-backups/</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="recovery-process" tabindex="-1"><a class="header-anchor" href="#recovery-process"><span>Recovery Process</span></a></h3><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre><code><span class="line"><span class="token shebang important">#!/bin/bash</span></span>
+<span class="line"><span class="token comment"># restore.sh</span></span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># Set variables</span></span>
+<span class="line"><span class="token assign-left variable">BACKUP_FILE</span><span class="token operator">=</span><span class="token variable">$1</span></span>
+<span class="line"><span class="token assign-left variable">DB_NAME</span><span class="token operator">=</span><span class="token string">&quot;foodhouse&quot;</span></span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># Download from S3</span></span>
+<span class="line">aws s3 <span class="token function">cp</span> s3://foodhouse-backups/<span class="token variable">$BACKUP_FILE</span> <span class="token builtin class-name">.</span></span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># Decompress backup</span></span>
+<span class="line">gunzip <span class="token variable">$BACKUP_FILE</span></span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># Restore database</span></span>
+<span class="line">psql <span class="token parameter variable">-h</span> <span class="token variable">$DB_HOST</span> <span class="token parameter variable">-U</span> <span class="token variable">$DB_USER</span> <span class="token parameter variable">-d</span> <span class="token variable">$DB_NAME</span> <span class="token operator">&lt;</span> <span class="token variable">${BACKUP_FILE<span class="token operator">%</span>.gz}</span></span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="scaling-configuration" tabindex="-1"><a class="header-anchor" href="#scaling-configuration"><span>Scaling Configuration</span></a></h2><h3 id="horizontal-pod-autoscaling" tabindex="-1"><a class="header-anchor" href="#horizontal-pod-autoscaling"><span>Horizontal Pod Autoscaling</span></a></h3><div class="language-yaml line-numbers-mode" data-highlighter="prismjs" data-ext="yml"><pre><code><span class="line"><span class="token comment"># hpa.yaml</span></span>
+<span class="line"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> autoscaling/v2</span>
+<span class="line"><span class="token key atrule">kind</span><span class="token punctuation">:</span> HorizontalPodAutoscaler</span>
+<span class="line"><span class="token key atrule">metadata</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token key atrule">name</span><span class="token punctuation">:</span> users<span class="token punctuation">-</span>hpa</span>
+<span class="line">  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> foodhouse</span>
+<span class="line"><span class="token key atrule">spec</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token key atrule">scaleTargetRef</span><span class="token punctuation">:</span></span>
+<span class="line">    <span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apps/v1</span>
+<span class="line">    <span class="token key atrule">kind</span><span class="token punctuation">:</span> Deployment</span>
+<span class="line">    <span class="token key atrule">name</span><span class="token punctuation">:</span> users</span>
+<span class="line">  <span class="token key atrule">minReplicas</span><span class="token punctuation">:</span> <span class="token number">3</span></span>
+<span class="line">  <span class="token key atrule">maxReplicas</span><span class="token punctuation">:</span> <span class="token number">10</span></span>
+<span class="line">  <span class="token key atrule">metrics</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token punctuation">-</span> <span class="token key atrule">type</span><span class="token punctuation">:</span> Resource</span>
+<span class="line">    <span class="token key atrule">resource</span><span class="token punctuation">:</span></span>
+<span class="line">      <span class="token key atrule">name</span><span class="token punctuation">:</span> cpu</span>
+<span class="line">      <span class="token key atrule">target</span><span class="token punctuation">:</span></span>
+<span class="line">        <span class="token key atrule">type</span><span class="token punctuation">:</span> Utilization</span>
+<span class="line">        <span class="token key atrule">averageUtilization</span><span class="token punctuation">:</span> <span class="token number">70</span></span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="database-scaling" tabindex="-1"><a class="header-anchor" href="#database-scaling"><span>Database Scaling</span></a></h3><div class="language-yaml line-numbers-mode" data-highlighter="prismjs" data-ext="yml"><pre><code><span class="line"><span class="token comment"># rds-scaling.yaml</span></span>
+<span class="line"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> autoscaling.k8s.io/v1</span>
+<span class="line"><span class="token key atrule">kind</span><span class="token punctuation">:</span> VerticalPodAutoscaler</span>
+<span class="line"><span class="token key atrule">metadata</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token key atrule">name</span><span class="token punctuation">:</span> rds<span class="token punctuation">-</span>vpa</span>
+<span class="line"><span class="token key atrule">spec</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token key atrule">targetRef</span><span class="token punctuation">:</span></span>
+<span class="line">    <span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> <span class="token string">&quot;apps/v1&quot;</span></span>
+<span class="line">    <span class="token key atrule">kind</span><span class="token punctuation">:</span> Deployment</span>
+<span class="line">    <span class="token key atrule">name</span><span class="token punctuation">:</span> postgres</span>
+<span class="line">  <span class="token key atrule">updatePolicy</span><span class="token punctuation">:</span></span>
+<span class="line">    <span class="token key atrule">updateMode</span><span class="token punctuation">:</span> <span class="token string">&quot;Auto&quot;</span></span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="troubleshooting" tabindex="-1"><a class="header-anchor" href="#troubleshooting"><span>Troubleshooting</span></a></h2><h3 id="common-issues" tabindex="-1"><a class="header-anchor" href="#common-issues"><span>Common Issues</span></a></h3><ol><li><p><strong>Database Connection Issues</strong></p><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre><code><span class="line"><span class="token comment"># Check database connectivity</span></span>
+<span class="line">kubectl <span class="token builtin class-name">exec</span> <span class="token parameter variable">-it</span> users-pod -- <span class="token function">nc</span> <span class="token parameter variable">-zv</span> postgres <span class="token number">5432</span></span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># Check database logs</span></span>
+<span class="line">kubectl logs <span class="token parameter variable">-f</span> postgres-pod</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li><li><p><strong>Service Health Issues</strong></p><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre><code><span class="line"><span class="token comment"># Check service health</span></span>
+<span class="line">kubectl get pods <span class="token parameter variable">-n</span> foodhouse</span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># Check service logs</span></span>
+<span class="line">kubectl logs <span class="token parameter variable">-f</span> users-pod <span class="token parameter variable">-n</span> foodhouse</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li><li><p><strong>Network Issues</strong></p><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre><code><span class="line"><span class="token comment"># Check network policies</span></span>
+<span class="line">kubectl get networkpolicy <span class="token parameter variable">-n</span> foodhouse</span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># Check service endpoints</span></span>
+<span class="line">kubectl get endpoints <span class="token parameter variable">-n</span> foodhouse</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li></ol><h3 id="monitoring-commands" tabindex="-1"><a class="header-anchor" href="#monitoring-commands"><span>Monitoring Commands</span></a></h3><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre><code><span class="line"><span class="token comment"># Check pod status</span></span>
+<span class="line">kubectl get pods <span class="token parameter variable">-n</span> foodhouse</span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># Check service status</span></span>
+<span class="line">kubectl get services <span class="token parameter variable">-n</span> foodhouse</span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># Check deployment status</span></span>
+<span class="line">kubectl get deployments <span class="token parameter variable">-n</span> foodhouse</span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># Check logs</span></span>
+<span class="line">kubectl logs <span class="token parameter variable">-f</span> deployment/users <span class="token parameter variable">-n</span> foodhouse</span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># Check metrics</span></span>
+<span class="line">kubectl <span class="token function">top</span> pods <span class="token parameter variable">-n</span> foodhouse</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="maintenance-procedures" tabindex="-1"><a class="header-anchor" href="#maintenance-procedures"><span>Maintenance Procedures</span></a></h2><h3 id="regular-maintenance" tabindex="-1"><a class="header-anchor" href="#regular-maintenance"><span>Regular Maintenance</span></a></h3><ol><li><p><strong>Database Maintenance</strong></p><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre><code><span class="line"><span class="token comment"># Vacuum database</span></span>
+<span class="line">kubectl <span class="token builtin class-name">exec</span> <span class="token parameter variable">-it</span> postgres-pod -- psql <span class="token parameter variable">-U</span> postgres <span class="token parameter variable">-d</span> foodhouse <span class="token parameter variable">-c</span> <span class="token string">&quot;VACUUM ANALYZE;&quot;</span></span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># Check database size</span></span>
+<span class="line">kubectl <span class="token builtin class-name">exec</span> <span class="token parameter variable">-it</span> postgres-pod -- psql <span class="token parameter variable">-U</span> postgres <span class="token parameter variable">-d</span> foodhouse <span class="token parameter variable">-c</span> <span class="token string">&quot;\l+&quot;</span></span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li><li><p><strong>Log Rotation</strong></p><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre><code><span class="line"><span class="token comment"># Rotate logs</span></span>
+<span class="line">kubectl <span class="token builtin class-name">exec</span> <span class="token parameter variable">-it</span> users-pod -- <span class="token function">logrotate</span> /etc/logrotate.conf</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div></div></div></li><li><p><strong>Certificate Renewal</strong></p><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre><code><span class="line"><span class="token comment"># Check certificate status</span></span>
+<span class="line">kubectl get certificate <span class="token parameter variable">-n</span> foodhouse</span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># Force certificate renewal</span></span>
+<span class="line">kubectl delete certificate foodhouse-cert <span class="token parameter variable">-n</span> foodhouse</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li></ol><h3 id="emergency-procedures" tabindex="-1"><a class="header-anchor" href="#emergency-procedures"><span>Emergency Procedures</span></a></h3><ol><li><p><strong>Service Rollback</strong></p><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre><code><span class="line"><span class="token comment"># Rollback deployment</span></span>
+<span class="line">kubectl rollout undo deployment/users <span class="token parameter variable">-n</span> foodhouse</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div></div></div></li><li><p><strong>Database Recovery</strong></p><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre><code><span class="line"><span class="token comment"># Restore from backup</span></span>
+<span class="line">./restore.sh foodhouse_20240320_120000.sql.gz</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div></div></div></li><li><p><strong>Emergency Scaling</strong></p><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre><code><span class="line"><span class="token comment"># Scale up services</span></span>
+<span class="line">kubectl scale deployment <span class="token function">users</span> <span class="token parameter variable">--replicas</span><span class="token operator">=</span><span class="token number">5</span> <span class="token parameter variable">-n</span> foodhouse</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div></div></div></li></ol><h2 id="performance-optimization" tabindex="-1"><a class="header-anchor" href="#performance-optimization"><span>Performance Optimization</span></a></h2><h3 id="resource-optimization" tabindex="-1"><a class="header-anchor" href="#resource-optimization"><span>Resource Optimization</span></a></h3><div class="language-yaml line-numbers-mode" data-highlighter="prismjs" data-ext="yml"><pre><code><span class="line"><span class="token comment"># resource-limits.yaml</span></span>
+<span class="line"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1</span>
+<span class="line"><span class="token key atrule">kind</span><span class="token punctuation">:</span> LimitRange</span>
+<span class="line"><span class="token key atrule">metadata</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token key atrule">name</span><span class="token punctuation">:</span> foodhouse<span class="token punctuation">-</span>limits</span>
+<span class="line">  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> foodhouse</span>
+<span class="line"><span class="token key atrule">spec</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token key atrule">limits</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token punctuation">-</span> <span class="token key atrule">default</span><span class="token punctuation">:</span></span>
+<span class="line">      <span class="token key atrule">cpu</span><span class="token punctuation">:</span> 500m</span>
+<span class="line">      <span class="token key atrule">memory</span><span class="token punctuation">:</span> 512Mi</span>
+<span class="line">    <span class="token key atrule">defaultRequest</span><span class="token punctuation">:</span></span>
+<span class="line">      <span class="token key atrule">cpu</span><span class="token punctuation">:</span> 200m</span>
+<span class="line">      <span class="token key atrule">memory</span><span class="token punctuation">:</span> 256Mi</span>
+<span class="line">    <span class="token key atrule">type</span><span class="token punctuation">:</span> Container</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="cache-configuration" tabindex="-1"><a class="header-anchor" href="#cache-configuration"><span>Cache Configuration</span></a></h3><div class="language-yaml line-numbers-mode" data-highlighter="prismjs" data-ext="yml"><pre><code><span class="line"><span class="token comment"># redis-config.yaml</span></span>
+<span class="line"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1</span>
+<span class="line"><span class="token key atrule">kind</span><span class="token punctuation">:</span> ConfigMap</span>
+<span class="line"><span class="token key atrule">metadata</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token key atrule">name</span><span class="token punctuation">:</span> redis<span class="token punctuation">-</span>config</span>
+<span class="line">  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> foodhouse</span>
+<span class="line"><span class="token key atrule">data</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token key atrule">redis.conf</span><span class="token punctuation">:</span> <span class="token punctuation">|</span><span class="token scalar string"></span>
+<span class="line">    maxmemory 2gb</span>
+<span class="line">    maxmemory-policy allkeys-lru</span>
+<span class="line">    appendonly yes</span>
+<span class="line">    appendfsync everysec</span></span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="security-hardening" tabindex="-1"><a class="header-anchor" href="#security-hardening"><span>Security Hardening</span></a></h2><h3 id="pod-security-policies" tabindex="-1"><a class="header-anchor" href="#pod-security-policies"><span>Pod Security Policies</span></a></h3><div class="language-yaml line-numbers-mode" data-highlighter="prismjs" data-ext="yml"><pre><code><span class="line"><span class="token comment"># psp.yaml</span></span>
+<span class="line"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> policy/v1beta1</span>
+<span class="line"><span class="token key atrule">kind</span><span class="token punctuation">:</span> PodSecurityPolicy</span>
+<span class="line"><span class="token key atrule">metadata</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token key atrule">name</span><span class="token punctuation">:</span> foodhouse<span class="token punctuation">-</span>psp</span>
+<span class="line"><span class="token key atrule">spec</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token key atrule">privileged</span><span class="token punctuation">:</span> <span class="token boolean important">false</span></span>
+<span class="line">  <span class="token key atrule">seLinux</span><span class="token punctuation">:</span></span>
+<span class="line">    <span class="token key atrule">rule</span><span class="token punctuation">:</span> RunAsAny</span>
+<span class="line">  <span class="token key atrule">runAsUser</span><span class="token punctuation">:</span></span>
+<span class="line">    <span class="token key atrule">rule</span><span class="token punctuation">:</span> MustRunAsNonRoot</span>
+<span class="line">  <span class="token key atrule">fsGroup</span><span class="token punctuation">:</span></span>
+<span class="line">    <span class="token key atrule">rule</span><span class="token punctuation">:</span> MustRunAs</span>
+<span class="line">    <span class="token key atrule">ranges</span><span class="token punctuation">:</span></span>
+<span class="line">    <span class="token punctuation">-</span> <span class="token key atrule">min</span><span class="token punctuation">:</span> <span class="token number">1</span></span>
+<span class="line">      <span class="token key atrule">max</span><span class="token punctuation">:</span> <span class="token number">65535</span></span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="network-security" tabindex="-1"><a class="header-anchor" href="#network-security"><span>Network Security</span></a></h3><div class="language-yaml line-numbers-mode" data-highlighter="prismjs" data-ext="yml"><pre><code><span class="line"><span class="token comment"># network-security.yaml</span></span>
+<span class="line"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> networking.k8s.io/v1</span>
+<span class="line"><span class="token key atrule">kind</span><span class="token punctuation">:</span> NetworkPolicy</span>
+<span class="line"><span class="token key atrule">metadata</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token key atrule">name</span><span class="token punctuation">:</span> foodhouse<span class="token punctuation">-</span>network<span class="token punctuation">-</span>policy</span>
+<span class="line">  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> foodhouse</span>
+<span class="line"><span class="token key atrule">spec</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token key atrule">podSelector</span><span class="token punctuation">:</span></span>
+<span class="line">    <span class="token key atrule">matchLabels</span><span class="token punctuation">:</span></span>
+<span class="line">      <span class="token key atrule">app</span><span class="token punctuation">:</span> foodhouse</span>
+<span class="line">  <span class="token key atrule">policyTypes</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token punctuation">-</span> Ingress</span>
+<span class="line">  <span class="token punctuation">-</span> Egress</span>
+<span class="line">  <span class="token key atrule">ingress</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token punctuation">-</span> <span class="token key atrule">from</span><span class="token punctuation">:</span></span>
+<span class="line">    <span class="token punctuation">-</span> <span class="token key atrule">namespaceSelector</span><span class="token punctuation">:</span></span>
+<span class="line">        <span class="token key atrule">matchLabels</span><span class="token punctuation">:</span></span>
+<span class="line">          <span class="token key atrule">name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx</span>
+<span class="line">    <span class="token key atrule">ports</span><span class="token punctuation">:</span></span>
+<span class="line">    <span class="token punctuation">-</span> <span class="token key atrule">protocol</span><span class="token punctuation">:</span> TCP</span>
+<span class="line">      <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">8080</span></span>
+<span class="line">  <span class="token key atrule">egress</span><span class="token punctuation">:</span></span>
+<span class="line">  <span class="token punctuation">-</span> <span class="token key atrule">to</span><span class="token punctuation">:</span></span>
+<span class="line">    <span class="token punctuation">-</span> <span class="token key atrule">namespaceSelector</span><span class="token punctuation">:</span></span>
+<span class="line">        <span class="token key atrule">matchLabels</span><span class="token punctuation">:</span></span>
+<span class="line">          <span class="token key atrule">name</span><span class="token punctuation">:</span> kube<span class="token punctuation">-</span>system</span>
+<span class="line">    <span class="token key atrule">ports</span><span class="token punctuation">:</span></span>
+<span class="line">    <span class="token punctuation">-</span> <span class="token key atrule">protocol</span><span class="token punctuation">:</span> TCP</span>
+<span class="line">      <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">53</span></span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="disaster-recovery" tabindex="-1"><a class="header-anchor" href="#disaster-recovery"><span>Disaster Recovery</span></a></h2><h3 id="backup-strategy" tabindex="-1"><a class="header-anchor" href="#backup-strategy"><span>Backup Strategy</span></a></h3><ol><li><p><strong>Database Backups</strong></p><ul><li>Daily full backups</li><li>Hourly incremental backups</li><li>Point-in-time recovery enabled</li></ul></li><li><p><strong>Configuration Backups</strong></p><ul><li>Kubernetes manifests</li><li>Terraform state</li><li>Environment configurations</li></ul></li><li><p><strong>Application State</strong></p><ul><li>Redis snapshots</li><li>File system backups</li><li>Log archives</li></ul></li></ol><h3 id="recovery-procedures" tabindex="-1"><a class="header-anchor" href="#recovery-procedures"><span>Recovery Procedures</span></a></h3><ol><li><p><strong>Full System Recovery</strong></p><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre><code><span class="line"><span class="token comment"># Restore infrastructure</span></span>
+<span class="line">terraform apply <span class="token parameter variable">-backup</span><span class="token operator">=</span>backup.tfstate</span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># Restore databases</span></span>
+<span class="line">./restore.sh foodhouse_full_backup.sql.gz</span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># Restore application state</span></span>
+<span class="line">kubectl apply <span class="token parameter variable">-f</span> k8s/backup/</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li><li><p><strong>Partial Recovery</strong></p><div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh"><pre><code><span class="line"><span class="token comment"># Restore specific service</span></span>
+<span class="line">kubectl apply <span class="token parameter variable">-f</span> k8s/backup/users/</span>
+<span class="line"></span>
+<span class="line"><span class="token comment"># Restore specific database</span></span>
+<span class="line">./restore.sh foodhouse_users_backup.sql.gz</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li></ol><h2 id="deployment-checklist" tabindex="-1"><a class="header-anchor" href="#deployment-checklist"><span>Deployment Checklist</span></a></h2><h3 id="pre-deployment" tabindex="-1"><a class="header-anchor" href="#pre-deployment"><span>Pre-deployment</span></a></h3><ul><li>[ ] Review and update configuration files</li><li>[ ] Run automated tests</li><li>[ ] Check resource availability</li><li>[ ] Verify backup systems</li><li>[ ] Review security configurations</li></ul><h3 id="deployment" tabindex="-1"><a class="header-anchor" href="#deployment"><span>Deployment</span></a></h3><ul><li>[ ] Deploy infrastructure changes</li><li>[ ] Deploy database migrations</li><li>[ ] Deploy application services</li><li>[ ] Verify service health</li><li>[ ] Run smoke tests</li></ul><h3 id="post-deployment" tabindex="-1"><a class="header-anchor" href="#post-deployment"><span>Post-deployment</span></a></h3><ul><li>[ ] Monitor system metrics</li><li>[ ] Check error logs</li><li>[ ] Verify backup systems</li><li>[ ] Update documentation</li><li>[ ] Notify stakeholders</li></ul></div><!--[--><!--]--></div><footer class="vp-page-meta"><!----><div class="vp-meta-item git-info"><div class="vp-meta-item last-updated"><span class="meta-item-label">Last Updated:: </span><time class="meta-item-info" datetime="2025-06-03T23:00:21.000Z" data-allow-mismatch>6/3/25, 11:00 PM</time></div><div class="vp-meta-item contributors"><span class="meta-item-label">Contributors: </span><span class="meta-item-info"><!--[--><!--[--><span class="contributor" title="email: andojoks@gmail.com">andojoks</span><!----><!--]--><!--]--></span></div></div></footer><!----><!--[--><!--]--></main><!--]--></div><!--[--><!----><!--]--><!--]--></div>
+    <script type="module" src="/assets/app-BQO2_VqH.js" defer></script>
+  </body>
+</html>
